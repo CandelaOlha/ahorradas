@@ -26,7 +26,7 @@
         </div>
         <div class="navbar-menu navbar-end">
             <div class="navbar-item">
-                <button class="button is-primary">
+                <button id="boton-balance" class="button is-primary">
                     <span class="icon">
                         <i class="fas fa-chart-line"></i>
                     </span>
@@ -34,7 +34,7 @@
                   </button>
             </div>
             <div class="navbar-item">
-                <button class="button is-primary">
+                <button id="boton-categorias" class="button is-primary">
                     <span class="icon">
                         <i class="fas fa-tag"></i>
                     </span>
@@ -42,7 +42,7 @@
                   </button>
             </div>
             <div class="navbar-item">
-                <button class="button is-primary">
+                <button id="boton-reportes" class="button is-primary">
                     <span class="icon">
                         <i class="fas fa-chart-pie"></i>
                     </span>
@@ -54,7 +54,7 @@
     <!-- Acá termina la barra de navegación -->
     <div class="has-background-light py-4">
         <!-- Acá empieza la sección de Balance -->
-        <section class="section columns is-flex-wrap-wrap">
+        <section id="seccion-balance" class="section columns is-flex-wrap-wrap">
             <div class="column is-3-desktop is-offset-1-desktop is-12-tablet is-flex-direction-column">
                 <div class="box mb-5">
                     <h2 class="title is-3">Balance</h2>
@@ -71,14 +71,14 @@
         </section>
         <!-- Acá termina la sección de Balance -->
         <!-- Acá empieza la sección de Categorías -->
-        <section class="section is-hidden">
+        <section id="seccion-categorias" class="section is-hidden">
             <div class="box column is-8 is-offset-2">
                 <h2 class="title is-2">Categorías</h2>
               </div>
         </section>
         <!-- Acá termina la sección de Categorías -->
         <!-- Acá empieza la sección de Reportes -->
-        <section class="section is-hidden">
+        <section id="seccion-reportes" class="section is-hidden">
             <div class="box column is-8 is-offset-2">
                 <h2 class="title is-2">Reportes</h2>
               </div>
@@ -86,4 +86,5 @@
         <!-- Acá termina la sección de Reportes -->
     </div>
 </body>
+<script src="index.js"></script>
 </html>
