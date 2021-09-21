@@ -5,7 +5,7 @@ const seccionCategorias = document.querySelector("#seccion-categorias");
 const botonReportes = document.querySelector("#boton-reportes");
 const seccionReportes = document.querySelector("#seccion-reportes");
 
-// Boton para que se vea la seccion de balance
+// Función para que se vea la sección de Balance
 
 botonBalance.onclick = () => {
     seccionBalance.classList.remove("is-hidden");
@@ -13,7 +13,7 @@ botonBalance.onclick = () => {
     seccionReportes.classList.add("is-hidden");
 }
 
-// Boton para que se vea la seccion de categorias
+// Función para que se vea la sección de Categorías
 
 botonCategorias.onclick = () => {
     seccionCategorias.classList.remove("is-hidden");
@@ -21,7 +21,7 @@ botonCategorias.onclick = () => {
     seccionReportes.classList.add("is-hidden");
 }
 
-// Boton para que se vea la seccion de reportes
+// Función para que se vea la sección de Reportes
 
 botonReportes.onclick = () => {
     seccionReportes.classList.remove("is-hidden");
