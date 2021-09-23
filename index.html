@@ -237,7 +237,56 @@
         <!-- Acá empieza el box de Nueva operación -->
         <section id="seccion-nueva-operacion" class="section is-hidden">
             <div class="box column is-8-desktop is-offset-2-desktop is-12-tablet">
-                <h2 class="title is-2 has-text-weight-bold">Nueva operación</h2>
+                <h2 class="title is-2 has-text-weight-bold mb-6">Nueva operación</h2>
+                <div class="field">
+                    <form action="" method="POST">
+                        <div class="field">
+                            <label class="label" for="descripcion">Descripción</label>
+                            <div class="control">
+                                <input class="input" type="text" name="descripcion">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label" for="monto">Monto</label>
+                            <div class="control">
+                                <input class="input" type="number" name="monto">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label" for="tipo">Tipo</label>
+                            <div class="select is-fullwidth">
+                                <select name="tipo">
+                                    <option value="gasto">Gasto</option>
+                                    <option value="ganancia">Ganancia</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label" for="categoria">Categoría</label>
+                            <div class="select is-fullwidth">
+                                <select name="categoria">
+                                    <option value="todas">Todas</option>
+                                    <option value="comidas">Comidas</option>
+                                    <option value="servicios">Servicios</option>
+                                    <option value="salidas">Salidas</option>
+                                    <option value="educacion">Educaión</option>
+                                    <option value="transporte">Transporte</option>
+                                    <option value="trabajo">Trabajo</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label" for="fecha">Fecha</label>
+                            <div class="control">
+                                <input class="input" type="date" name="fecha">
+                            </div>
+                        </div>
+                        <div class="column field has-text-right is-mobile mt-6">
+                            <button class="button is-light">Cancelar</button>
+                            <button class="button is-success">Agregar</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </section>
         <!-- Acá termina el box de Nueva operación -->
