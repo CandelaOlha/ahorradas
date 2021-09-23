@@ -13,6 +13,7 @@ botonBalance.onclick = () => {
     seccionBalance.classList.remove("is-hidden");
     seccionCategorias.classList.add("is-hidden");
     seccionReportes.classList.add("is-hidden");
+    seccionNuevaOperacion.classList.add("is-hidden");
 }
 
 // Función para que se vea la sección de Categorías
@@ -21,6 +22,7 @@ botonCategorias.onclick = () => {
     seccionCategorias.classList.remove("is-hidden");
     seccionBalance.classList.add("is-hidden");
     seccionReportes.classList.add("is-hidden");
+    seccionNuevaOperacion.classList.add("is-hidden");
 }
 
 // Función para que se vea la sección de Reportes
@@ -29,6 +31,7 @@ botonReportes.onclick = () => {
     seccionReportes.classList.remove("is-hidden");
     seccionBalance.classList.add("is-hidden");
     seccionCategorias.classList.add("is-hidden");
+    seccionNuevaOperacion.classList.add("is-hidden");
 }
 
 // Función para que se vea el box de Nueva operación
