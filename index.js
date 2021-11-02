@@ -40,3 +40,6 @@ botonNuevaOperacion.onclick = () => {
     seccionNuevaOperacion.classList.remove("is-hidden");
     seccionBalance.classList.add("is-hidden");
 }
+
+
+//prueba rama barbara
