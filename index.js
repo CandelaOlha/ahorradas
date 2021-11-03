@@ -40,3 +40,98 @@ botonNuevaOperacion.onclick = () => {
     seccionNuevaOperacion.classList.remove("is-hidden");
     seccionBalance.classList.add("is-hidden");
 }
+
+// InnerHTML para reportes
+
+/* <section class="section mt-4">
+<h3 class="title is-size-4 mb-5">Resumen</h3>
+<div class="columns is-mobile is-align-items-center">
+    <h4 class="column is-half has-text-weight-semibold">Categoría con mayor ganancia</h4>
+    <div class="column is-3 has-text-right">
+        <span class="tag is-primary is-light">Categoría</span>
+    </div>
+    <p class="column has-text-right has-text-success is-3 has-text-weight-semibold">+$100</p>
+</div>
+<div class="columns is-mobile is-align-items-center">
+    <h4 class="column is-half has-text-weight-semibold">Categoría con mayor gasto</h4>
+    <div class="column is-3 has-text-right">
+        <span class="tag is-primary is-light">Categoría</span>
+    </div>
+    <p class="column has-text-right has-text-danger is-3 has-text-weight-semibold">-$100</p>
+</div>
+<div class="columns is-mobile is-align-items-center">
+    <h4 class="column is-half has-text-weight-semibold">Categoría con mayor balance</h4>
+    <div class="column is-3 has-text-right">
+        <span class="tag is-primary is-light">Categoría</span>
+    </div>
+    <p class="column has-text-right is-3 has-text-weight-semibold">-$100</p>
+</div>
+<div class="columns is-mobile is-align-items-center">
+    <h4 class="column is-half has-text-weight-semibold">Mes con mayor ganancia</h4>
+    <div class="column is-3 has-text-right">
+        <p>3/11/2021</p>
+    </div>
+    <p class="column has-text-right has-text-success is-3 has-text-weight-semibold">+$100</p>
+</div>
+<div class="columns is-mobile is-align-items-center">
+    <h4 class="column is-half has-text-weight-semibold">Mes con mayor gasto</h4>
+    <div class="column is-3 has-text-right">
+        <p>3/11/2021</p>
+    </div>
+    <p class="column has-text-right has-text-danger is-3 has-text-weight-semibold">-$100</p>
+</div>
+</section>
+<section class="section mt-4">
+<h3 class="title is-size-4 mb-5">Totales por categorías</h3>
+<div class="columns is-mobile is-align-items-center">
+    <h4 class="column has-text-weight-semibold">Categorías</h4>
+    <div class="column has-text-right">
+        <h4 class="has-text-weight-semibold">Ganancias</h4>
+    </div>
+    <div class="column has-text-right">
+        <h4 class="has-text-weight-semibold">Gastos</h4>
+    </div>
+    <div class="column has-text-right">
+        <h4 class="has-text-weight-semibold">Balance</h4>
+    </div>
+</div>
+<div class="columns is-mobile is-align-items-center">
+    <h4 class="column has-text-weight-semibold">Categoría</h4>
+    <div class="column has-text-right">
+        <h4 class="has-text-success">+$200</h4>
+    </div>
+    <div class="column has-text-right">
+        <h4 class="has-text-danger">-$100</h4>
+    </div>
+    <div class="column has-text-right">
+        <h4>$100</h4>
+    </div>
+</div>
+</section>
+<section class="section mt-4">
+<h3 class="title is-size-4 mb-5">Totales por mes</h3>
+<div class="columns is-mobile is-align-items-center">
+    <h4 class="column has-text-weight-semibold">Mes</h4>
+    <div class="column has-text-right">
+        <h4 class="has-text-weight-semibold">Ganancias</h4>
+    </div>
+    <div class="column has-text-right">
+        <h4 class="has-text-weight-semibold">Gastos</h4>
+    </div>
+    <div class="column has-text-right">
+        <h4 class="has-text-weight-semibold">Balance</h4>
+    </div>
+</div>
+<div class="columns is-mobile is-align-items-center">
+    <h4 class="column has-text-weight-semibold">11/2021</h4>
+    <div class="column has-text-right">
+        <h4 class="has-text-success">+$200</h4>
+    </div>
+    <div class="column has-text-right">
+        <h4 class="has-text-danger">-$100</h4>
+    </div>
+    <div class="column has-text-right">
+        <h4>$100</h4>
+    </div>
+</div>
+</section> */
