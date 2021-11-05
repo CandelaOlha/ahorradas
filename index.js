@@ -135,3 +135,28 @@ botonNuevaOperacion.onclick = () => {
     </div>
 </div>
 </section> */
+
+
+
+
+//Funcion que integra operaciones al html (revisar, es anterior a reduce)
+// const convertirOperacionesAHTML = (operaciones) => {
+//     acc = ""
+//     const operacionesEnHTML = operaciones.map ((operacion) =>{
+       
+//         acc = acc + `
+//         <div class="columns"> 
+//             <h3 class="column is-3 has-text-weight-semibold">${operacion.descripcion}</h3>
+//             <div class="column is-3" ><p class="tag is-primary is-light">${operacion.categoria}</p></div>
+//             <h3 class="column is-2 has-text-grey">${operacion.fecha}</h3>
+//             <h3 class="column is-1 ${esGasto(operaciones)} ">${operacion.monto}</h3>
+//             <div class="columns column is-offset-1 is-1">
+//                 <button class="column is-2 button is-ghost is-size-7">Editar</button>
+//                 <button class="button column is-offset-4 is-2 is-ghost is-size-7">Eliminar</button>
+//             </div>
+//         </div>`
+//     })
+//     contenedorColumnas.innerHTML = acc
+// }
+
+// convertirOperacionesAHTML(operaciones)
