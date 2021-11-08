@@ -47,6 +47,10 @@ botonNuevaOperacion.onclick = () => {
 
 const categorias = ["Comidas", "Servicios", "Salidas", "Educación", "Transporte", "Trabajo"];
 
+const obtenerCategorias = () => {
+    
+}
+
 // InnerHTML para reportes
 
 /* <section class="section mt-4">
