@@ -74,8 +74,19 @@ botonNuevaOperacion.onclick = () => {
 const categorias = ["Comidas", "Servicios", "Salidas", "Educación", "Transporte", "Trabajo"];
 
 const obtenerCategorias = () => {
-    
+    const categoriasEnLocalStorage = leerDesdeLocalStorage("categorias");
+    if (categoriasEnLocalStorage === null) {
+        console.log("retorna categorias por defecto")
+        return categorias;
+    }
+    else {
+        console.log("retorna categorias nuevas")
+        return categoriasEnLocalStorage;
+        // categorias = categoriasEnLocalStorage; (revisar si es necesario)
+    }
 }
+
+console.log(obtenerCategorias());
 
 // InnerHTML para reportes
 
