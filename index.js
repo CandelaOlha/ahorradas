@@ -43,6 +43,10 @@ botonNuevaOperacion.onclick = () => {
     seccionBalance.classList.add("is-hidden");
 }
 
+// Sección Categorías
+
+const categorias = ["Comidas", "Servicios", "Salidas", "Educación", "Transporte", "Trabajo"];
+
 // InnerHTML para reportes
 
 /* <section class="section mt-4">
