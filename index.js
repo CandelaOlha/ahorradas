@@ -6,6 +6,8 @@ const botonReportes = document.querySelector("#boton-reportes");
 const seccionReportes = document.querySelector("#seccion-reportes");
 const botonNuevaOperacion = document.querySelector("#boton-nueva-operacion");
 const seccionNuevaOperacion = document.querySelector("#seccion-nueva-operacion");
+const inputNuevaCategoria = document.querySelector("#input-nueva-categoria")
+const botonAgregarCategoria = document.querySelector("#boton-agregar-categoria")
 
 // Función para que se vea la sección de Balance
 
