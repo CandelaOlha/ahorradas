@@ -9,6 +9,32 @@ const seccionNuevaOperacion = document.querySelector("#seccion-nueva-operacion")
 const inputNuevaCategoria = document.querySelector("#input-nueva-categoria")
 const botonAgregarCategoria = document.querySelector("#boton-agregar-categoria")
 
+// Funciones auxiliares de JSON
+
+const convertirAJSON = (objeto) => {
+    const objetoConvertidoAJSON = JSON.stringify(objeto);
+
+    return objetoConvertidoAJSON;
+}
+
+const convertirDesdeJSON = (objetoJSON) => {
+    const JSONConvertidoAObjeto = JSON.parse(objetoJSON);
+
+    return JSONConvertidoAObjeto;
+}
+
+const guardarEnLocalStorage = (objeto, string) => {
+    const objetoConvertidoAJSON = convertirAJSON(objeto);
+    localStorage.setItem(string, objetoConvertidoAJSON);
+}
+
+const leerDesdeLocalStorage = (clave) => {
+    const objetoGuardado = localStorage.getItem(clave);
+    const objetoDeJavascript = convertirDesdeJSON(objetoGuardado);
+
+    return objetoDeJavascript;
+}
+
 // Función para que se vea la sección de Balance
 
 botonBalance.onclick = () => {
