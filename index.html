@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+        integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
     <link rel="icon" type="image/ico" href="favicon.ico">
     <title>AhorrADAs</title>
 </head>
+
 <body>
     <!-- Acá empieza empieza la barra de navegación -->
     <nav class="navbar is-spaced is-primary" role="navigation" aria-label="barra de navegación">
@@ -145,8 +148,17 @@
                         <p class="title is-4 has-text-grey-dark has-text-centered">Sin resultados</p>
                         <p class="has-text-centered">Cambia los filtros o agrega operaciones</p>
                     </div>
-                </div>
-            </div>
+                    <!-- Operaciones -->
+                    <div id="contenedor-categorias-operaciones" class="columns is-hidden">
+                        <h3 class="column is-3 has-text-weight-semibold">Descripción</h3>
+                        <h3 class="column is-3 has-text-weight-semibold">Categoría</h3>
+                        <h3 class="column is-2 has-text-weight-semibold">Fecha</h3>
+                        <h3 class="column is-1 has-text-weight-semibold">Monto</h3>
+                        <h3 class="column is-offset-1 is-1 has-text-weight-semibold">Acciones</h3>
+                    </div>
+                    <div id="contenedor-operaciones" class="is-flex is-flex-direction-column is-hidden">
+                    </div>
+                    <!-- Termina operaciones -->
         </section>
         <!-- Acá termina la sección de Balance -->
         <!-- Acá empieza la sección de Categorías -->
@@ -313,4 +325,5 @@
     </main>
 </body>
 <script src="index.js"></script>
+
 </html>
