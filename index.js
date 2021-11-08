@@ -6,8 +6,10 @@ const botonReportes = document.querySelector("#boton-reportes");
 const seccionReportes = document.querySelector("#seccion-reportes");
 const botonNuevaOperacion = document.querySelector("#boton-nueva-operacion");
 const seccionNuevaOperacion = document.querySelector("#seccion-nueva-operacion");
-const inputNuevaCategoria = document.querySelector("#input-nueva-categoria")
-const botonAgregarCategoria = document.querySelector("#boton-agregar-categoria")
+const inputNuevaCategoria = document.querySelector("#input-nueva-categoria");
+const botonAgregarCategoria = document.querySelector("#boton-agregar-categoria");
+const selectCategoriasFiltro = document.querySelector("#select-categorias-filtro");
+const selectCategoriasNuevaOperacion = document.querySelector("#select-categorias-nueva-operacion");
 
 // Funciones auxiliares de JSON
 
@@ -87,6 +89,18 @@ const obtenerCategorias = () => {
 }
 
 console.log(obtenerCategorias());
+
+const agregarNuevasCategoriasAlSelect = () => {
+    const categorias = obtenerCategorias();
+    const categoriasEnHTML = categorias.reduce((acc, elemento) => {
+        return acc + `<option value="${elemento}">${elemento}</option>`
+    }, "");
+    
+    selectCategoriasFiltro.innerHTML = categoriasEnHTML;
+    selectCategoriasNuevaOperacion.innerHTML = categoriasEnHTML;
+}
+
+agregarNuevasCategoriasAlSelect();
 
 // InnerHTML para reportes
 
