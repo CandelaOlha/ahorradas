@@ -97,14 +97,7 @@
                             <div class="field">
                                 <label class="label" for="categoria">Categoría</label>
                                 <div class="select is-fullwidth">
-                                    <select name="categoria">
-                                        <option value="todas">Todas</option>
-                                        <option value="comidas">Comidas</option>
-                                        <option value="servicios">Servicios</option>
-                                        <option value="salidas">Salidas</option>
-                                        <option value="educacion">Educaión</option>
-                                        <option value="transporte">Transporte</option>
-                                        <option value="trabajo">Trabajo</option>
+                                    <select name="categoria" id="select-categorias-filtro">
                                     </select>
                                 </div>
                             </div>
@@ -176,59 +169,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="columns is-mobile">
-                    <div class="column">
-                        <span class="tag is-primary is-light">Comida</span>
-                    </div>
-                    <div class="column columns is-mobile is-narrow">
-                        <button class="button is-ghost is-size-7">Editar</button>
-                        <button class="button is-ghost is-size-7">Eliminar</button>
-                    </div>
-                </div>
-                <div class="columns is-mobile">
-                    <div class="column">
-                        <span class="tag is-primary is-light">Servicios</span>
-                    </div>
-                    <div class="column columns is-mobile is-narrow">
-                        <button class="button is-ghost is-size-7">Editar</button>
-                        <button class="button is-ghost is-size-7">Eliminar</button>
-                    </div>
-                </div>
-                <div class="columns is-mobile">
-                    <div class="column">
-                        <span class="tag is-primary is-light">Salidas</span>
-                    </div>
-                    <div class="column columns is-mobile is-narrow">
-                        <button class="button is-ghost is-size-7">Editar</button>
-                        <button class="button is-ghost is-size-7">Eliminar</button>
-                    </div>
-                </div>
-                <div class="columns is-mobile">
-                    <div class="column">
-                        <span class="tag is-primary is-light">Educación</span>
-                    </div>
-                    <div class="column columns is-mobile is-narrow">
-                        <button class="button is-ghost is-size-7">Editar</button>
-                        <button class="button is-ghost is-size-7">Eliminar</button>
-                    </div>
-                </div>
-                <div class="columns is-mobile">
-                    <div class="column">
-                        <span class="tag is-primary is-light">Transporte</span>
-                    </div>
-                    <div class="column columns is-mobile is-narrow">
-                        <button class="button is-ghost is-size-7">Editar</button>
-                        <button class="button is-ghost is-size-7">Eliminar</button>
-                    </div>
-                </div>
-                <div class="columns is-mobile">
-                    <div class="column">
-                        <span class="tag is-primary is-light">Trabajo</span>
-                    </div>
-                    <div class="column columns is-mobile is-narrow">
-                        <button class="button is-ghost is-size-7">Editar</button>
-                        <button class="button is-ghost is-size-7">Eliminar</button>
-                    </div>
+                <div id="contenedor-categorias">
                 </div>
             </div>
         </section>
@@ -279,14 +220,7 @@
                         <div class="field">
                             <label class="label" for="categoria">Categoría</label>
                             <div class="select is-fullwidth">
-                                <select name="categoria">
-                                    <option value="todas">Todas</option>
-                                    <option value="comidas">Comidas</option>
-                                    <option value="servicios">Servicios</option>
-                                    <option value="salidas">Salidas</option>
-                                    <option value="educacion">Educaión</option>
-                                    <option value="transporte">Transporte</option>
-                                    <option value="trabajo">Trabajo</option>
+                                <select name="categoria" id="select-categorias-nueva-operacion">
                                 </select>
                             </div>
                         </div>
@@ -325,5 +259,4 @@
     </main>
 </body>
 <script src="index.js"></script>
-
 </html>

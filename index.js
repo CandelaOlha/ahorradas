@@ -6,8 +6,11 @@ const botonReportes = document.querySelector("#boton-reportes");
 const seccionReportes = document.querySelector("#seccion-reportes");
 const botonNuevaOperacion = document.querySelector("#boton-nueva-operacion");
 const seccionNuevaOperacion = document.querySelector("#seccion-nueva-operacion");
-const inputNuevaCategoria = document.querySelector("#input-nueva-categoria")
-const botonAgregarCategoria = document.querySelector("#boton-agregar-categoria")
+const inputNuevaCategoria = document.querySelector("#input-nueva-categoria");
+const botonAgregarCategoria = document.querySelector("#boton-agregar-categoria");
+const selectCategoriasFiltro = document.querySelector("#select-categorias-filtro");
+const selectCategoriasNuevaOperacion = document.querySelector("#select-categorias-nueva-operacion");
+const contenedorCategorias = document.querySelector("#contenedor-categorias");
 
 // Funciones auxiliares de JSON
 
@@ -74,10 +77,59 @@ botonNuevaOperacion.onclick = () => {
 const categorias = ["Comidas", "Servicios", "Salidas", "Educación", "Transporte", "Trabajo"];
 
 const obtenerCategorias = () => {
-    
+    const categoriasEnLocalStorage = leerDesdeLocalStorage("categorias");
+    if (categoriasEnLocalStorage === null) {
+        console.log("retorna categorias por defecto")
+        return categorias;
+    }
+    else {
+        console.log("retorna categorias nuevas")
+        return categoriasEnLocalStorage;
+        // categorias = categoriasEnLocalStorage; (revisar si es necesario)
+    }
 }
 
-// InnerHTML para reportes
+const agregarNuevasCategoriasAlSelect = () => {
+    const categorias = obtenerCategorias();
+    const categoriasEnHTML = categorias.reduce((acc, elemento) => {
+        return acc + `<option value="${elemento}">${elemento}</option>`
+    }, "");
+    
+    selectCategoriasFiltro.innerHTML = categoriasEnHTML;
+    selectCategoriasNuevaOperacion.innerHTML = categoriasEnHTML;
+}
+
+agregarNuevasCategoriasAlSelect();
+
+const mostrarCategoriasEnHTML = () => {
+    const categorias = obtenerCategorias();
+    const categoriasEnHTML = categorias.reduce((acc, elemento) => {
+        return acc + `<div class="columns is-mobile">
+        <div class="column">
+            <span class="tag is-primary is-light">${elemento}</span>
+        </div>
+        <div class="column columns is-mobile is-narrow">
+            <button class="button is-ghost is-size-7">Editar</button>
+            <button class="button is-ghost is-size-7">Eliminar</button>
+        </div>
+    </div>`
+    }, "");
+    contenedorCategorias.innerHTML = categoriasEnHTML;
+}
+
+mostrarCategoriasEnHTML();
+
+botonAgregarCategoria.onclick = () => {
+    const categorias = obtenerCategorias();
+    const nuevaCategoria = inputNuevaCategoria.value;
+    categorias.push(nuevaCategoria);
+    inputNuevaCategoria.value = "";
+    guardarEnLocalStorage(categorias, "categorias");
+    agregarNuevasCategoriasAlSelect();
+    mostrarCategoriasEnHTML();
+}
+
+// InnerHTML para Reportes
 
 /* <section class="section mt-4">
 <h3 class="title is-size-4 mb-5">Resumen</h3>
