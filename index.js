@@ -89,8 +89,6 @@ const obtenerCategorias = () => {
     }
 }
 
-console.log(obtenerCategorias());
-
 const agregarNuevasCategoriasAlSelect = () => {
     const categorias = obtenerCategorias();
     const categoriasEnHTML = categorias.reduce((acc, elemento) => {
@@ -121,7 +119,17 @@ const mostrarCategoriasEnHTML = () => {
 
 mostrarCategoriasEnHTML();
 
-// InnerHTML para reportes
+botonAgregarCategoria.onclick = () => {
+    const categorias = obtenerCategorias();
+    const nuevaCategoria = inputNuevaCategoria.value;
+    categorias.push(nuevaCategoria);
+    inputNuevaCategoria.value = "";
+    guardarEnLocalStorage(categorias, "categorias");
+    agregarNuevasCategoriasAlSelect();
+    mostrarCategoriasEnHTML();
+}
+
+// InnerHTML para Reportes
 
 /* <section class="section mt-4">
 <h3 class="title is-size-4 mb-5">Resumen</h3>
