@@ -132,7 +132,7 @@
                             <button id="boton-nueva-operacion" class="button is-primary">+ Nueva operación</button>
                         </div>
                     </div>
-                    <div class="my-6 py-6">
+                    <div class="my-6 py-6" id="contenedor-operaciones-vacio">
                         <div class="columns mb-5">
                             <figure class="column image is-offset-3 is-6 p-5">
                                 <img src="imagenes/billetera.svg" alt="">
@@ -195,23 +195,23 @@
             <div class="box column is-8-desktop is-offset-2-desktop is-12-tablet">
                 <h2 class="title is-2 has-text-weight-bold mb-6">Nueva operación</h2>
                 <div class="field">
-                    <form action="" method="POST">
+                    <form action="" method="POST" id="formulario-agregar-nueva-operacion">
                         <div class="field">
                             <label class="label" for="descripcion">Descripción</label>
                             <div class="control">
-                                <input class="input" type="text" name="descripcion">
+                                <input class="input" type="text" name="descripcion" id="input-descripcion">
                             </div>
                         </div>
                         <div class="field">
                             <label class="label" for="monto">Monto</label>
                             <div class="control">
-                                <input class="input" type="number" name="monto">
+                                <input class="input" type="number" name="monto" id="input-monto">
                             </div>
                         </div>
                         <div class="field">
                             <label class="label" for="tipo">Tipo</label>
                             <div class="select is-fullwidth">
-                                <select name="tipo">
+                                <select name="tipo" id="select-tipo">
                                     <option value="gasto">Gasto</option>
                                     <option value="ganancia">Ganancia</option>
                                 </select>
@@ -227,12 +227,12 @@
                         <div class="field">
                             <label class="label" for="fecha">Fecha</label>
                             <div class="control">
-                                <input class="input" type="date" name="fecha">
+                                <input class="input" type="date" name="fecha" id="input-fecha">
                             </div>
                         </div>
                         <div class="column field has-text-right is-mobile mt-6">
-                            <button class="button is-light">Cancelar</button>
-                            <button class="button is-success">Agregar</button>
+                            <button class="button is-light" id="boton-cancelar-nueva-operacion">Cancelar</button>
+                            <button class="button is-success" id="boton-agregar-nueva-operacion">Agregar</button>
                         </div>
                     </form>
                 </div>

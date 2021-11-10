@@ -11,6 +11,16 @@ const botonAgregarCategoria = document.querySelector("#boton-agregar-categoria")
 const selectCategoriasFiltro = document.querySelector("#select-categorias-filtro");
 const selectCategoriasNuevaOperacion = document.querySelector("#select-categorias-nueva-operacion");
 const contenedorCategorias = document.querySelector("#contenedor-categorias");
+const formularioAgregarNuevaOperacion = document.querySelector("#formulario-agregar-nueva-operacion");
+const inputDescripcion = document.querySelector("#input-descripcion");
+const inputMonto = document.querySelector("#input-monto");
+const selectTipo = document.querySelector("#select-tipo");
+const inputFecha = document.querySelector("#input-fecha");
+const botonCancelarNuevaOperacion = document.querySelector("#boton-cancelar-nueva-operacion");
+const botonAgregarNuevaOperacion = document.querySelector("#boton-agregar-nueva-operacion");
+const contenedorOperacionesVacio = document.querySelector("#contenedor-operaciones-vacio");
+const contenedorCategoriasOperaciones = document.querySelector("#contenedor-categorias-operaciones");
+const contenedorOperaciones = document.querySelector("#contenedor-operaciones");
 
 // Funciones auxiliares de JSON
 
@@ -129,6 +139,65 @@ botonAgregarCategoria.onclick = () => {
     mostrarCategoriasEnHTML();
 }
 
+// Agregar nueva operacion
+
+const operaciones = [];
+
+const obtenerOperaciones = () => {
+    const operacionesEnLocalStorage = leerDesdeLocalStorage("operaciones");
+    if (operacionesEnLocalStorage !== null) {
+        return operacionesEnLocalStorage;
+    }
+}
+
+const mostrarOperacionesEnHTML = () => {
+    const operaciones = obtenerOperaciones();
+    const operacionesEnHTML = operaciones.reduce((acc, elemento) => {
+        return acc + `
+        <div class="columns"> 
+            <h3 class="column is-3 has-text-weight-semibold">${elemento.descripcion}</h3>
+            <div class="column is-3" ><p class="tag is-primary is-light">${elemento.categoria}</p></div>
+            <h3 class="column is-2 has-text-grey">${elemento.fecha}</h3>
+            <h3 class="column is-1">${elemento.monto}</h3>
+            <div class="columns column is-offset-1 is-1">
+                <button class="column is-2 button is-ghost is-size-7">Editar</button>
+                <button class="button column is-offset-4 is-2 is-ghost is-size-7">Eliminar</button>
+            </div>
+        </div>`
+    }, "");
+
+    console.log(operacionesEnHTML);
+
+    contenedorOperaciones.innerHTML = operacionesEnHTML;
+
+    contenedorCategoriasOperaciones.classList.remove("is-hidden");
+    contenedorOperaciones.classList.remove("is-hidden");
+    contenedorOperacionesVacio.classList.add("is-hidden");
+    seccionNuevaOperacion.classList.add("is-hidden");
+    seccionBalance.classList.remove("is-hidden");
+}
+
+formularioAgregarNuevaOperacion.onsubmit = (event) => {
+    event.preventDefault()
+}
+
+botonAgregarNuevaOperacion.onclick = () => {
+    const nuevaOperacion = {
+        descripcion: inputDescripcion.value, 
+        monto: inputMonto.value, 
+        tipo: selectTipo.value, 
+        categoria: selectCategoriasNuevaOperacion.value, 
+        fecha: inputFecha.value, 
+    }
+
+    operaciones.push(nuevaOperacion);
+    console.log(operaciones);
+
+    guardarEnLocalStorage(operaciones, "operaciones");
+
+    mostrarOperacionesEnHTML();
+}
+
 // InnerHTML para Reportes
 
 /* <section class="section mt-4">
@@ -223,28 +292,3 @@ botonAgregarCategoria.onclick = () => {
     </div>
 </div>
 </section> */
-
-
-
-
-//Funcion que integra operaciones al html (revisar, es anterior a reduce)
-// const convertirOperacionesAHTML = (operaciones) => {
-//     acc = ""
-//     const operacionesEnHTML = operaciones.map ((operacion) =>{
-       
-//         acc = acc + `
-//         <div class="columns"> 
-//             <h3 class="column is-3 has-text-weight-semibold">${operacion.descripcion}</h3>
-//             <div class="column is-3" ><p class="tag is-primary is-light">${operacion.categoria}</p></div>
-//             <h3 class="column is-2 has-text-grey">${operacion.fecha}</h3>
-//             <h3 class="column is-1 ${esGasto(operaciones)} ">${operacion.monto}</h3>
-//             <div class="columns column is-offset-1 is-1">
-//                 <button class="column is-2 button is-ghost is-size-7">Editar</button>
-//                 <button class="button column is-offset-4 is-2 is-ghost is-size-7">Eliminar</button>
-//             </div>
-//         </div>`
-//     })
-//     contenedorColumnas.innerHTML = acc
-// }
-
-// convertirOperacionesAHTML(operaciones)
