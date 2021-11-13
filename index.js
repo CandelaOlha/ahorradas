@@ -89,7 +89,7 @@ const categorias = ["Comidas", "Servicios", "Salidas", "Educación", "Transporte
 const obtenerCategorias = () => {
     const categoriasEnLocalStorage = leerDesdeLocalStorage("categorias");
     if (categoriasEnLocalStorage === null) {
-        console.log("retorna categorias por defecto")
+        // console.log("retorna categorias por defecto")
         return categorias;
     }
     else {
@@ -143,6 +143,7 @@ botonAgregarCategoria.onclick = () => {
 
 const operaciones = [];
 
+
 const obtenerOperaciones = () => {
     const operacionesEnLocalStorage = leerDesdeLocalStorage("operaciones");
     if (operacionesEnLocalStorage !== null) {
@@ -152,7 +153,7 @@ const obtenerOperaciones = () => {
 
 const mostrarOperacionesEnHTML = () => {
     const operaciones = obtenerOperaciones();
-    const operacionesEnHTML = operaciones.reduce((acc, elemento) => {
+    const operacionesEnHTML = operaciones.reduce((acc, elemento, index) => {
         return acc + `
         <div class="columns"> 
             <h3 class="column is-3 has-text-weight-semibold">${elemento.descripcion}</h3>
@@ -161,14 +162,16 @@ const mostrarOperacionesEnHTML = () => {
             <h3 class="column is-1">${elemento.monto}</h3>
             <div class="columns column is-offset-1 is-1">
                 <button class="column is-2 button is-ghost is-size-7">Editar</button>
-                <button class="button column is-offset-4 is-2 is-ghost is-size-7">Eliminar</button>
+                <button class="button column is-offset-4 is-2 is-ghost is-size-7 boton-eliminar-operacion" id="boton-eliminar-operacion-${index}"">Eliminar</button>
             </div>
         </div>`
     }, "");
 
-    console.log(operacionesEnHTML);
+   
 
     contenedorOperaciones.innerHTML = operacionesEnHTML;
+    crearBotonesEliminar()
+
 
     contenedorCategoriasOperaciones.classList.remove("is-hidden");
     contenedorOperaciones.classList.remove("is-hidden");
@@ -176,6 +179,15 @@ const mostrarOperacionesEnHTML = () => {
     seccionNuevaOperacion.classList.add("is-hidden");
     seccionBalance.classList.remove("is-hidden");
 }
+
+
+// const obtenerOperaciones = () => {
+//     const operacionesEnLocalStorage = leerDesdeLocalStorage("operaciones");
+//     if (operacionesEnLocalStorage !== null) {
+//         return operacionesEnLocalStorage;
+//     }
+// }
+
 
 formularioAgregarNuevaOperacion.onsubmit = (event) => {
     event.preventDefault()
@@ -197,6 +209,44 @@ botonAgregarNuevaOperacion.onclick = () => {
 
     mostrarOperacionesEnHTML();
 }
+
+// Boton eliminar operacion 
+
+
+
+
+
+const crearBotonesEliminar = () => {
+    const botonesEliminarOperacion = document.querySelectorAll(".boton-eliminar-operacion")
+    for (let i = 0; i < botonesEliminarOperacion.length; i++) {
+        botonesEliminarOperacion[i].onclick = () => {
+           let operaciones = obtenerOperaciones()
+           const idBotonEliminarOperacion = Number(botonesEliminarOperacion[i].id.slice(25))
+           console.log(idBotonEliminarOperacion)
+
+           const arrayFiltrado = operaciones.filter((elemento, index) =>{
+               return index !== idBotonEliminarOperacion
+           })
+           operaciones = arrayFiltrado
+           guardarEnLocalStorage(operaciones, "operaciones")
+           mostrarOperacionesEnHTML()
+        }
+        
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // InnerHTML para Reportes
 
