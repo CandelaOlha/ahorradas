@@ -139,7 +139,7 @@ botonAgregarCategoria.onclick = () => {
     mostrarCategoriasEnHTML();
 }
 
-// Agregar nueva operacion
+// Seccion Operaciones
 
 const operaciones = [];
 
@@ -180,42 +180,6 @@ const mostrarOperacionesEnHTML = () => {
     seccionBalance.classList.remove("is-hidden");
 }
 
-
-// const obtenerOperaciones = () => {
-//     const operacionesEnLocalStorage = leerDesdeLocalStorage("operaciones");
-//     if (operacionesEnLocalStorage !== null) {
-//         return operacionesEnLocalStorage;
-//     }
-// }
-
-
-formularioAgregarNuevaOperacion.onsubmit = (event) => {
-    event.preventDefault()
-}
-
-botonAgregarNuevaOperacion.onclick = () => {
-    const nuevaOperacion = {
-        descripcion: inputDescripcion.value, 
-        monto: inputMonto.value, 
-        tipo: selectTipo.value, 
-        categoria: selectCategoriasNuevaOperacion.value, 
-        fecha: inputFecha.value, 
-    }
-
-    operaciones.push(nuevaOperacion);
-    console.log(operaciones);
-
-    guardarEnLocalStorage(operaciones, "operaciones");
-
-    mostrarOperacionesEnHTML();
-}
-
-// Boton eliminar operacion 
-
-
-
-
-
 const crearBotonesEliminar = () => {
     const botonesEliminarOperacion = document.querySelectorAll(".boton-eliminar-operacion")
     for (let i = 0; i < botonesEliminarOperacion.length; i++) {
@@ -234,6 +198,44 @@ const crearBotonesEliminar = () => {
         
     }
 }
+
+mostrarOperacionesEnHTML()
+
+formularioAgregarNuevaOperacion.onsubmit = (event) => {
+    event.preventDefault()
+}
+
+botonAgregarNuevaOperacion.onclick = () => {
+    const operaciones = obtenerOperaciones()
+    const nuevaOperacion = {
+        descripcion: inputDescripcion.value, 
+        monto: inputMonto.value, 
+        tipo: selectTipo.value, 
+        categoria: selectCategoriasNuevaOperacion.value, 
+        fecha: inputFecha.value, 
+    }
+
+    operaciones.push(nuevaOperacion);
+    console.log(operaciones);
+
+    inputDescripcion.value = ""
+    inputMonto.value = ""
+    selectTipo.value = ""
+    selectCategoriasNuevaOperacion.value = ""
+    inputFecha.value = ""
+
+
+    guardarEnLocalStorage(operaciones, "operaciones");
+
+    mostrarOperacionesEnHTML();
+}
+
+
+
+
+
+
+
 
 
 
