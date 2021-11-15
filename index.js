@@ -90,16 +90,13 @@ const categorias = ["Comidas", "Servicios", "Salidas", "Educación", "Transporte
 const obtenerCategorias = () => {
     const categoriasEnLocalStorage = leerDesdeLocalStorage("categorias");
     if (categoriasEnLocalStorage === null) {
-        // console.log("retorna categorias por defecto")
         return categorias;
     }
     else {
-        console.log("retorna categorias nuevas")
         return categoriasEnLocalStorage;
         // categorias = categoriasEnLocalStorage; (revisar si es necesario)
     }
 }
-
 
 const agregarNuevasCategoriasAlSelect = (select) => {
     const categorias = obtenerCategorias();
@@ -147,11 +144,13 @@ botonAgregarCategoria.onclick = () => {
 
 const operaciones = [];
 
-
 const obtenerOperaciones = () => {
     const operacionesEnLocalStorage = leerDesdeLocalStorage("operaciones");
     if (operacionesEnLocalStorage !== null) {
         return operacionesEnLocalStorage;
+    }
+    else {
+        return operaciones
     }
 }
 
@@ -166,17 +165,15 @@ const mostrarOperacionesEnHTML = () => {
             <h3 class="column is-1">${elemento.monto}</h3>
             <div class="columns column is-offset-1 is-1">
                 <button class="column is-2 button is-ghost is-size-7 boton-editar-operacion" id="boton-editar-operaciones-${index}">Editar</button>
-                <button class="button column is-offset-4 is-2 is-ghost is-size-7 boton-eliminar-operacion" id="boton-eliminar-operacion-${index}"">Eliminar</button>
+                <button class="button column is-offset-4 is-2 is-ghost is-size-7 boton-eliminar-operacion" id="boton-eliminar-operacion-${index}">Eliminar</button>
             </div>
         </div>`
     }, "");
 
-   
-
     contenedorOperaciones.innerHTML = operacionesEnHTML;
+
     crearBotonesEliminar()
     crearBotonesEditar()
-
 
     contenedorCategoriasOperaciones.classList.remove("is-hidden");
     contenedorOperaciones.classList.remove("is-hidden");
@@ -187,6 +184,7 @@ const mostrarOperacionesEnHTML = () => {
 
 const crearFormularioEditar = (id) => {
     let operaciones = obtenerOperaciones()
+
     seccionEditarOperacion.classList.remove("is-hidden")
     seccionBalance.classList.add("is-hidden")
 
@@ -236,8 +234,6 @@ const crearFormularioEditar = (id) => {
     </div>
 </div>`
 
-
-
     const formularioEditarOperacion = document.querySelector("#formulario-editar-operacion")
     const inputEditarDescripcion = document.querySelector("#input-editar-descripcion")
     const inputEditarMonto = document.querySelector("#input-editar-monto")
@@ -272,16 +268,13 @@ const crearBotonesEliminar = () => {
         botonesEliminarOperacion[i].onclick = () => {
            let operaciones = obtenerOperaciones()
            const idBotonEliminarOperacion = Number(botonesEliminarOperacion[i].id.slice(25))
-           console.log(idBotonEliminarOperacion)
-
-           const arrayFiltrado = operaciones.filter((elemento, index) =>{
+           const arrayFiltrado = operaciones.filter((elemento, index) => {
                return index !== idBotonEliminarOperacion
            })
            operaciones = arrayFiltrado
            guardarEnLocalStorage(operaciones, "operaciones")
            mostrarOperacionesEnHTML()
         }
-        
     }
 }
 
@@ -312,14 +305,12 @@ botonAgregarNuevaOperacion.onclick = () => {
     }
 
     operaciones.push(nuevaOperacion);
-    console.log(operaciones);
 
     inputDescripcion.value = ""
     inputMonto.value = ""
     selectTipo.value = ""
     selectCategoriasNuevaOperacion.value = ""
     inputFecha.value = ""
-
 
     guardarEnLocalStorage(operaciones, "operaciones");
 
