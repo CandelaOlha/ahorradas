@@ -100,17 +100,27 @@ const obtenerCategorias = () => {
     }
 }
 
-const agregarNuevasCategoriasAlSelect = () => {
+// const agregarNuevasCategoriasAlSelect = () => {
+//     const categorias = obtenerCategorias();
+//     const categoriasEnHTML = categorias.reduce((acc, elemento) => {
+//         return acc + `<option value="${elemento}">${elemento}</option>`
+//     }, "");
+    
+//     selectCategoriasFiltro.innerHTML = categoriasEnHTML;
+//     selectCategoriasNuevaOperacion.innerHTML = categoriasEnHTML;
+// }
+
+const agregarNuevasCategoriasAlSelect = (select) => {
     const categorias = obtenerCategorias();
     const categoriasEnHTML = categorias.reduce((acc, elemento) => {
         return acc + `<option value="${elemento}">${elemento}</option>`
     }, "");
     
-    selectCategoriasFiltro.innerHTML = categoriasEnHTML;
-    selectCategoriasNuevaOperacion.innerHTML = categoriasEnHTML;
+    select.innerHTML = categoriasEnHTML;
 }
 
-agregarNuevasCategoriasAlSelect();
+agregarNuevasCategoriasAlSelect(selectCategoriasFiltro);
+agregarNuevasCategoriasAlSelect(selectCategoriasNuevaOperacion);
 
 const mostrarCategoriasEnHTML = () => {
     const categorias = obtenerCategorias();
@@ -136,7 +146,9 @@ botonAgregarCategoria.onclick = () => {
     categorias.push(nuevaCategoria);
     inputNuevaCategoria.value = "";
     guardarEnLocalStorage(categorias, "categorias");
-    agregarNuevasCategoriasAlSelect();
+    agregarNuevasCategoriasAlSelect(selectCategoriasFiltro);
+    agregarNuevasCategoriasAlSelect(selectCategoriasNuevaOperacion);    
+    // agregarNuevasCategoriasAlSelect();
     mostrarCategoriasEnHTML();
 }
 
@@ -186,7 +198,6 @@ const crearFormularioEditar = (id) => {
     let operaciones = obtenerOperaciones()
     seccionEditarOperacion.classList.remove("is-hidden")
     seccionBalance.classList.add("is-hidden")
-    // seccionBalance.style.display = "none";
 
     seccionEditarOperacion.innerHTML = `<div class="box column is-8-desktop is-offset-2-desktop is-12-tablet">
     <h2 class="title is-2 has-text-weight-bold mb-6">Editar operación</h2>
@@ -235,13 +246,16 @@ const crearFormularioEditar = (id) => {
 </div>`
 
 
+
     const formularioEditarOperacion = document.querySelector("#formulario-editar-operacion")
     const inputEditarDescripcion = document.querySelector("#input-editar-descripcion")
     const inputEditarMonto = document.querySelector("#input-editar-monto")
     const selectEditarTipo = document.querySelector("#select-editar-tipo")
-    const selectEditarCategoria = document.querySelector("#select-editar-categoria")
+    const selectEditarCategoria = document.querySelector("#select-editar-categorias-operacion")
     const inputEditarFecha = document.querySelector("#input-editar-fecha")
     
+    agregarNuevasCategoriasAlSelect(selectEditarCategoria);
+
     formularioEditarOperacion.onsubmit = (event) => {
         event.preventDefault()
 
@@ -250,20 +264,15 @@ const crearFormularioEditar = (id) => {
         operaciones[id].descripcion = inputEditarDescripcion.value
         operaciones[id].monto = inputEditarMonto.value
         operaciones[id].tipo = selectEditarTipo.value
-        // array[id].categoria = selectEditarCategoria.value
+        operaciones[id].categoria = selectEditarCategoria.value
         operaciones[id].fecha = inputEditarFecha.value
 
         seccionEditarOperacion.classList.add("is-hidden")
         seccionBalance.classList.remove("is-hidden")
-        // seccionBalance.style.display = "block"; 
 
         guardarEnLocalStorage(operaciones, "operaciones")
         mostrarOperacionesEnHTML()
-
-
-
     }
-
 }
 
 const crearBotonesEliminar = () => {
