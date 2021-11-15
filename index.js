@@ -100,15 +100,6 @@ const obtenerCategorias = () => {
     }
 }
 
-// const agregarNuevasCategoriasAlSelect = () => {
-//     const categorias = obtenerCategorias();
-//     const categoriasEnHTML = categorias.reduce((acc, elemento) => {
-//         return acc + `<option value="${elemento}">${elemento}</option>`
-//     }, "");
-    
-//     selectCategoriasFiltro.innerHTML = categoriasEnHTML;
-//     selectCategoriasNuevaOperacion.innerHTML = categoriasEnHTML;
-// }
 
 const agregarNuevasCategoriasAlSelect = (select) => {
     const categorias = obtenerCategorias();
