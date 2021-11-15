@@ -21,6 +21,7 @@ const botonAgregarNuevaOperacion = document.querySelector("#boton-agregar-nueva-
 const contenedorOperacionesVacio = document.querySelector("#contenedor-operaciones-vacio");
 const contenedorCategoriasOperaciones = document.querySelector("#contenedor-categorias-operaciones");
 const contenedorOperaciones = document.querySelector("#contenedor-operaciones");
+const seccionEditarOperacion = document.querySelector("#seccion-editar-operacion")
 
 // Funciones auxiliares de JSON
 
@@ -161,7 +162,7 @@ const mostrarOperacionesEnHTML = () => {
             <h3 class="column is-2 has-text-grey">${elemento.fecha}</h3>
             <h3 class="column is-1">${elemento.monto}</h3>
             <div class="columns column is-offset-1 is-1">
-                <button class="column is-2 button is-ghost is-size-7">Editar</button>
+                <button class="column is-2 button is-ghost is-size-7 boton-editar-operacion" id="boton-editar-operaciones-${index}">Editar</button>
                 <button class="button column is-offset-4 is-2 is-ghost is-size-7 boton-eliminar-operacion" id="boton-eliminar-operacion-${index}"">Eliminar</button>
             </div>
         </div>`
@@ -171,6 +172,7 @@ const mostrarOperacionesEnHTML = () => {
 
     contenedorOperaciones.innerHTML = operacionesEnHTML;
     crearBotonesEliminar()
+    crearBotonesEditar()
 
 
     contenedorCategoriasOperaciones.classList.remove("is-hidden");
@@ -178,6 +180,90 @@ const mostrarOperacionesEnHTML = () => {
     contenedorOperacionesVacio.classList.add("is-hidden");
     seccionNuevaOperacion.classList.add("is-hidden");
     seccionBalance.classList.remove("is-hidden");
+}
+
+const crearFormularioEditar = (id) => {
+    let operaciones = obtenerOperaciones()
+    seccionEditarOperacion.classList.remove("is-hidden")
+    seccionBalance.classList.add("is-hidden")
+    // seccionBalance.style.display = "none";
+
+    seccionEditarOperacion.innerHTML = `<div class="box column is-8-desktop is-offset-2-desktop is-12-tablet">
+    <h2 class="title is-2 has-text-weight-bold mb-6">Editar operación</h2>
+    <div class="field">
+        <form action="" method="POST" id="formulario-editar-operacion">
+            <div class="field">
+                <label class="label" for="descripcion">Descripción</label>
+                <div class="control">
+                    <input class="input" type="text" name="descripcion" id="input-editar-descripcion" value="${operaciones[id].descripcion}">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label" for="monto">Monto</label>
+                <div class="control">
+                    <input class="input" type="number" name="monto" id="input-editar-monto" value="${operaciones[id].monto}">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label" for="tipo">Tipo</label>
+                <div class="select is-fullwidth">
+                    <select name="tipo" id="select-editar-tipo" value="${operaciones[id].tipo}">
+                        <option value="gasto">Gasto</option>
+                        <option value="ganancia">Ganancia</option>
+                    </select>
+                </div>
+            </div>
+            <div class="field">
+                <label class="label" for="categoria">Categoría</label>
+                <div class="select is-fullwidth">
+                    <select name="categoria" id="select-editar-categorias-operacion" value="${operaciones[id].categoria}">
+                    </select>
+                </div>
+            </div>
+            <div class="field">
+                <label class="label" for="fecha">Fecha</label>
+                <div class="control">
+                    <input class="input" type="date" name="fecha" id="input-editar-fecha" value="${operaciones[id].fecha}">
+                </div>
+            </div>
+            <div class="column field has-text-right is-mobile mt-6">
+                <button class="button is-light" id="boton-cancelar-editar-operacion">Cancelar</button>
+                <input type="submit" class="button is-success" id="boton-editar-operacion" value="Editar">
+            </div>
+        </form>
+    </div>
+</div>`
+
+
+    const formularioEditarOperacion = document.querySelector("#formulario-editar-operacion")
+    const inputEditarDescripcion = document.querySelector("#input-editar-descripcion")
+    const inputEditarMonto = document.querySelector("#input-editar-monto")
+    const selectEditarTipo = document.querySelector("#select-editar-tipo")
+    const selectEditarCategoria = document.querySelector("#select-editar-categoria")
+    const inputEditarFecha = document.querySelector("#input-editar-fecha")
+    
+    formularioEditarOperacion.onsubmit = (event) => {
+        event.preventDefault()
+
+        let operaciones = obtenerOperaciones()
+        
+        operaciones[id].descripcion = inputEditarDescripcion.value
+        operaciones[id].monto = inputEditarMonto.value
+        operaciones[id].tipo = selectEditarTipo.value
+        // array[id].categoria = selectEditarCategoria.value
+        operaciones[id].fecha = inputEditarFecha.value
+
+        seccionEditarOperacion.classList.add("is-hidden")
+        seccionBalance.classList.remove("is-hidden")
+        // seccionBalance.style.display = "block"; 
+
+        guardarEnLocalStorage(operaciones, "operaciones")
+        mostrarOperacionesEnHTML()
+
+
+
+    }
+
 }
 
 const crearBotonesEliminar = () => {
@@ -196,6 +282,16 @@ const crearBotonesEliminar = () => {
            mostrarOperacionesEnHTML()
         }
         
+    }
+}
+
+const crearBotonesEditar = () => {
+    const botonesEditarOperacion = document.querySelectorAll(".boton-editar-operacion")
+    for (let i = 0; i < botonesEditarOperacion.length; i++) {
+        botonesEditarOperacion[i].onclick = () => {
+           const idBotonEditarOperacion = Number(botonesEditarOperacion[i].id.slice(25))
+           crearFormularioEditar(idBotonEditarOperacion)
+        }
     }
 }
 
