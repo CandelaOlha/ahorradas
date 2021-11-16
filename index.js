@@ -334,6 +334,8 @@ const obtenerGanancias = () => {
       }, 0);
 
     totalGanancias.textContent = `+${total}`;
+
+    return total;
 }
 
 obtenerGanancias();
@@ -350,9 +352,25 @@ const obtenerGastos = () => {
       }, 0);
 
     totalGastos.textContent = `-${total}`;
+
+    return total;
 }
 
 obtenerGastos();
+
+const obtenerTotal = () => {
+    const ganancias = obtenerGanancias();
+    const gastos = obtenerGastos();
+
+    console.log(ganancias);
+    console.log(gastos);
+
+    const resultado = ganancias - gastos;
+
+    total.textContent = resultado;
+}
+
+obtenerTotal();
 
 
 
