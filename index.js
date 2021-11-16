@@ -22,6 +22,9 @@ const contenedorOperacionesVacio = document.querySelector("#contenedor-operacion
 const contenedorCategoriasOperaciones = document.querySelector("#contenedor-categorias-operaciones");
 const contenedorOperaciones = document.querySelector("#contenedor-operaciones");
 const seccionEditarOperacion = document.querySelector("#seccion-editar-operacion")
+const totalGanancias = document.querySelector("#ganancias");
+const totalGastos = document.querySelector("#gastos");
+const total = document.querySelector("#total");
 
 // Funciones auxiliares de JSON
 
@@ -317,10 +320,39 @@ botonAgregarNuevaOperacion.onclick = () => {
     mostrarOperacionesEnHTML();
 }
 
+// Sección Balance
 
+const obtenerGanancias = () => {
+    const operaciones = obtenerOperaciones();
 
+    const ganancias = operaciones.filter((elemento) => {
+        return elemento.tipo === "ganancia";
+    })
 
+    const total = ganancias.reduce((acc, elemento) => {
+        return acc + Number(elemento.monto);
+      }, 0);
 
+    totalGanancias.textContent = `+${total}`;
+}
+
+obtenerGanancias();
+
+const obtenerGastos = () => {
+    const operaciones = obtenerOperaciones();
+
+    const gastos = operaciones.filter((elemento) => {
+        return elemento.tipo === "gasto";
+    })
+
+    const total = gastos.reduce((acc, elemento) => {
+        return acc + Number(elemento.monto);
+      }, 0);
+
+    totalGastos.textContent = `-${total}`;
+}
+
+obtenerGastos();
 
 
 
