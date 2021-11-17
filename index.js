@@ -25,6 +25,7 @@ const seccionEditarOperacion = document.querySelector("#seccion-editar-operacion
 const totalGanancias = document.querySelector("#ganancias");
 const totalGastos = document.querySelector("#gastos");
 const total = document.querySelector("#total");
+const seccionEditarCategoria = document.querySelector("#seccion-editar-categoria");
 
 // Funciones auxiliares de JSON
 
@@ -115,21 +116,21 @@ agregarNuevasCategoriasAlSelect(selectCategoriasNuevaOperacion);
 
 const mostrarCategoriasEnHTML = () => {
     const categorias = obtenerCategorias();
-    const categoriasEnHTML = categorias.reduce((acc, elemento) => {
+    const categoriasEnHTML = categorias.reduce((acc, elemento, index) => {
         return acc + `<div class="columns is-mobile">
         <div class="column">
             <span class="tag is-primary is-light">${elemento}</span>
         </div>
         <div class="column columns is-mobile is-narrow">
-            <button class="button is-ghost is-size-7">Editar</button>
+            <button class="button is-ghost is-size-7 boton-editar-categoria" id="boton-editar-categoria-${index}">Editar</button>
             <button class="button is-ghost is-size-7">Eliminar</button>
         </div>
     </div>`
     }, "");
     contenedorCategorias.innerHTML = categoriasEnHTML;
-}
 
-mostrarCategoriasEnHTML();
+    crearBotonesEditarCategoria();
+}
 
 botonAgregarCategoria.onclick = () => {
     const categorias = obtenerCategorias();
@@ -142,6 +143,61 @@ botonAgregarCategoria.onclick = () => {
     // agregarNuevasCategoriasAlSelect();
     mostrarCategoriasEnHTML();
 }
+
+const crearFormularioEditarCategoria = (id) => {
+    let categorias = obtenerCategorias();
+
+    seccionEditarCategoria.classList.remove("is-hidden")
+    seccionCategorias.classList.add("is-hidden")
+
+    seccionEditarCategoria.innerHTML = `
+    <div class="box column is-8-desktop is-offset-2-desktop is-12-tablet">
+        <h2 class="title is-2 has-text-weight-bold mb-6">Editar categoría</h2>
+        <div class="field mb-6">
+            <form action="" method="POST" id="formulario-editar-categoria">
+                <label class="label" for="editar-categoria">Nombre</label>
+                <div class="control">
+                    <input class="input" type="text" name="editar-categoria" value="${categorias[id]}" id="input-editar-categoria">
+                </div>
+                <div class="is-flex is-justify-content-flex-end">
+                    <button class="button is-light mr-2">Cancelar</button>
+                    <input type="submit" value="Editar" class="button is-success">
+                </div>
+            </form>
+        </div>
+    </div>
+    `
+    
+    const formularioEditarCategoria = document.querySelector("#formulario-editar-categoria");
+    const inputEditarCategoria = document.querySelector("#input-editar-categoria");
+
+    formularioEditarCategoria.onsubmit = (event) => {
+        event.preventDefault();
+
+        let categorias = obtenerCategorias();
+
+        categorias[id] = inputEditarCategoria.value;
+
+        seccionEditarCategoria.classList.add("is-hidden");
+        seccionCategorias.classList.remove("is-hidden");
+
+        guardarEnLocalStorage(categorias, "categorias");
+        mostrarCategoriasEnHTML();
+    }
+}
+
+const crearBotonesEditarCategoria = () => {
+    const botonesEditarCategoria = document.querySelectorAll(".boton-editar-categoria");
+    for (let i = 0; i < botonesEditarCategoria.length; i++) {
+        botonesEditarCategoria[i].onclick = () => {
+           const idBotonEditarCategoria = Number(botonesEditarCategoria[i].id.slice(23));
+           console.log(idBotonEditarCategoria);
+           crearFormularioEditarCategoria(idBotonEditarCategoria);
+        }
+    }
+}
+
+mostrarCategoriasEnHTML();
 
 // Seccion Operaciones
 
