@@ -21,7 +21,10 @@ const botonAgregarNuevaOperacion = document.querySelector("#boton-agregar-nueva-
 const contenedorOperacionesVacio = document.querySelector("#contenedor-operaciones-vacio");
 const contenedorCategoriasOperaciones = document.querySelector("#contenedor-categorias-operaciones");
 const contenedorOperaciones = document.querySelector("#contenedor-operaciones");
-const seccionEditarOperacion = document.querySelector("#seccion-editar-operacion");
+const seccionEditarOperacion = document.querySelector("#seccion-editar-operacion")
+const totalGanancias = document.querySelector("#ganancias");
+const totalGastos = document.querySelector("#gastos");
+const total = document.querySelector("#total");
 const seccionEditarCategoria = document.querySelector("#seccion-editar-categoria");
 
 // Funciones auxiliares de JSON
@@ -210,6 +213,50 @@ const obtenerOperaciones = () => {
     }
 }
 
+const obtenerGanancias = () => {
+    const operaciones = obtenerOperaciones();
+
+    const ganancias = operaciones.filter((elemento) => {
+        return elemento.tipo === "ganancia";
+    })
+
+    const total = ganancias.reduce((acc, elemento) => {
+        return acc + Number(elemento.monto);
+      }, 0);
+
+    totalGanancias.textContent = `+${total}`;
+
+    return total;
+}
+
+const obtenerGastos = () => {
+    const operaciones = obtenerOperaciones();
+
+    const gastos = operaciones.filter((elemento) => {
+        return elemento.tipo === "gasto";
+    })
+
+    const total = gastos.reduce((acc, elemento) => {
+        return acc + Number(elemento.monto);
+      }, 0);
+
+    totalGastos.textContent = `-${total}`;
+
+    return total;
+}
+
+const obtenerTotal = () => {
+    const ganancias = obtenerGanancias();
+    const gastos = obtenerGastos();
+
+    console.log(ganancias);
+    console.log(gastos);
+
+    const resultado = ganancias - gastos;
+
+    total.textContent = resultado;
+}
+
 const mostrarOperacionesEnHTML = () => {
     const operaciones = obtenerOperaciones();
     const operacionesEnHTML = operaciones.reduce((acc, elemento, index) => {
@@ -315,6 +362,9 @@ const crearFormularioEditar = (id) => {
 
         guardarEnLocalStorage(operaciones, "operaciones")
         mostrarOperacionesEnHTML()
+        obtenerGanancias();
+        obtenerGastos();
+        obtenerTotal();
     }
 }
 
@@ -330,6 +380,9 @@ const crearBotonesEliminar = () => {
            operaciones = arrayFiltrado
            guardarEnLocalStorage(operaciones, "operaciones")
            mostrarOperacionesEnHTML()
+           obtenerGanancias();
+           obtenerGastos();
+           obtenerTotal();
         }
     }
 }
@@ -345,6 +398,12 @@ const crearBotonesEditar = () => {
 }
 
 mostrarOperacionesEnHTML()
+
+obtenerGanancias();
+
+obtenerGastos();
+
+obtenerTotal();
 
 formularioAgregarNuevaOperacion.onsubmit = (event) => {
     event.preventDefault()
@@ -369,20 +428,11 @@ botonAgregarNuevaOperacion.onclick = () => {
     inputFecha.value = ""
 
     guardarEnLocalStorage(operaciones, "operaciones");
-
     mostrarOperacionesEnHTML();
+    obtenerGanancias();
+    obtenerGastos();
+    obtenerTotal();
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 
