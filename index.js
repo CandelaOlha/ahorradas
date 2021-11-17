@@ -123,13 +123,14 @@ const mostrarCategoriasEnHTML = () => {
         </div>
         <div class="column columns is-mobile is-narrow">
             <button class="button is-ghost is-size-7 boton-editar-categoria" id="boton-editar-categoria-${index}">Editar</button>
-            <button class="button is-ghost is-size-7">Eliminar</button>
+            <button class="button is-ghost is-size-7 boton-eliminar-categoria" id="boton-eliminar-categoria-${index}">Eliminar</button>
         </div>
     </div>`
     }, "");
     contenedorCategorias.innerHTML = categoriasEnHTML;
 
     crearBotonesEditarCategoria();
+    crearBotonesEliminarCategoria();
 }
 
 botonAgregarCategoria.onclick = () => {
@@ -193,6 +194,22 @@ const crearBotonesEditarCategoria = () => {
            const idBotonEditarCategoria = Number(botonesEditarCategoria[i].id.slice(23));
            console.log(idBotonEditarCategoria);
            crearFormularioEditarCategoria(idBotonEditarCategoria);
+        }
+    }
+}
+
+const crearBotonesEliminarCategoria = () => {
+    const botonesEliminarCategoria = document.querySelectorAll(".boton-eliminar-categoria")
+    for (let i = 0; i < botonesEliminarCategoria.length; i++) {
+        botonesEliminarCategoria[i].onclick = () => {
+           let categorias = obtenerCategorias()
+           const idBotonEliminarCategoria = Number(botonesEliminarCategoria[i].id.slice(25))
+           const arrayCategoriasFiltrado = categorias.filter((elemento, index) => {
+               return index !== idBotonEliminarCategoria
+           })
+           categorias = arrayCategoriasFiltrado
+           guardarEnLocalStorage(categorias, "categorias")
+           mostrarCategoriasEnHTML()
         }
     }
 }
