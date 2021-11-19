@@ -29,6 +29,8 @@ const totalGanancias = document.querySelector("#ganancias");
 const totalGastos = document.querySelector("#gastos");
 const total = document.querySelector("#total");
 const seccionEditarCategoria = document.querySelector("#seccion-editar-categoria");
+const botonOcultarFiltros = document.querySelector("#boton-ocultar-filtros");
+const contenedorFiltros = document.querySelector("#contenedor-filtros");
 
 // Funciones auxiliares de JSON
 
@@ -70,7 +72,7 @@ for (let i = 0; i < linksMenu.length; i++) {
     }
 }
 
-// Función para que se vea la sección de Balance
+// Mostrar y ocultar secciones (ver si podemos tener una función auxiliar para esto)
 
 botonBalance.onclick = () => {
     seccionBalance.classList.remove("is-hidden");
@@ -79,16 +81,12 @@ botonBalance.onclick = () => {
     seccionNuevaOperacion.classList.add("is-hidden");
 }
 
-// Función para que se vea la sección de Categorías
-
 botonCategorias.onclick = () => {
     seccionCategorias.classList.remove("is-hidden");
     seccionBalance.classList.add("is-hidden");
     seccionReportes.classList.add("is-hidden");
     seccionNuevaOperacion.classList.add("is-hidden");
 }
-
-// Función para que se vea la sección de Reportes
 
 botonReportes.onclick = () => {
     seccionReportes.classList.remove("is-hidden");
@@ -97,11 +95,21 @@ botonReportes.onclick = () => {
     seccionNuevaOperacion.classList.add("is-hidden");
 }
 
-// Función para que se vea el box de Nueva operación
-
 botonNuevaOperacion.onclick = () => {
     seccionNuevaOperacion.classList.remove("is-hidden");
     seccionBalance.classList.add("is-hidden");
+}
+
+// Mostrar u ocultar filtros
+
+botonOcultarFiltros.onclick = () => {
+    contenedorFiltros.classList.toggle("is-hidden");
+    if (botonOcultarFiltros.textContent === "Ocultar filtros") {
+        botonOcultarFiltros.textContent = "Mostrar filtros";
+    }
+    else {
+        botonOcultarFiltros.textContent = "Ocultar filtros";
+    }
 }
 
 // Sección Categorías

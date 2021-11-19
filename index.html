@@ -78,10 +78,10 @@
                     <div class="columns is-mobile">
                         <h2 class="column title is-4 has-text-weight-bold">Filtros</h2>
                         <div class="column has-text-right">
-                            <button class="button is-ghost">Ocultar filtros</button>
+                            <button class="button is-ghost" id="boton-ocultar-filtros">Ocultar filtros</button>
                         </div>
                     </div>
-                    <div class="field">
+                    <div class="field" id="contenedor-filtros">
                         <form action="" method="POST">
                             <div class="field">
                                 <label class="label" for="tipo">Tipo</label>
@@ -140,7 +140,7 @@
                         <p class="title is-4 has-text-grey-dark has-text-centered">Sin resultados</p>
                         <p class="has-text-centered">Cambia los filtros o agrega operaciones</p>
                     </div>
-                    <!-- Operaciones -->
+                    <!-- Acá empieza el contenedor de Operaciones -->
                     <div id="contenedor-categorias-operaciones" class="columns is-hidden">
                         <h3 class="column is-3 has-text-weight-semibold">Descripción</h3>
                         <h3 class="column is-3 has-text-weight-semibold">Categoría</h3>
@@ -150,7 +150,7 @@
                     </div>
                     <div id="contenedor-operaciones" class="is-flex is-flex-direction-column is-hidden">
                     </div>
-                    <!-- Termina operaciones -->
+                    <!-- Acá termina el contenedor de Operaciones -->
         </section>
         <!-- Acá termina la sección de Balance -->
         <!-- Acá empieza la sección de Categorías -->
