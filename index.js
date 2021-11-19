@@ -68,7 +68,7 @@ menuHamburguesa.onclick = () => {
 for (let i = 0; i < linksMenu.length; i++) {
     linksMenu[i].onclick = () => {
         menuHamburguesa.classList.remove("is-active");
-    menuDeNavegacion.classList.remove("is-active");
+        menuDeNavegacion.classList.remove("is-active");
     }
 }
 
@@ -186,7 +186,7 @@ const crearFormularioEditarCategoria = (id) => {
                     <input class="input" type="text" name="editar-categoria" value="${categorias[id]}" id="input-editar-categoria">
                 </div>
                 <div class="is-flex is-justify-content-flex-end">
-                    <button class="button is-light mr-2">Cancelar</button>
+                    <button class="button is-light mr-2" id="boton-cancelar-editar-categoria" type="button">Cancelar</button>
                     <input type="submit" value="Editar" class="button is-success">
                 </div>
             </form>
@@ -209,6 +209,13 @@ const crearFormularioEditarCategoria = (id) => {
 
         guardarEnLocalStorage(categorias, "categorias");
         mostrarCategoriasEnHTML();
+    }
+
+    const botonCancelarEditarCategoria = document.querySelector("#boton-cancelar-editar-categoria");
+
+    botonCancelarEditarCategoria.onclick = () => {
+        formularioEditarCategoria.classList.add("is-hidden");
+        seccionCategorias.classList.remove("is-hidden");
     }
 }
 
@@ -390,7 +397,7 @@ const crearFormularioEditar = (id) => {
                 </div>
             </div>
             <div class="column field has-text-right is-mobile mt-6">
-                <button class="button is-light" id="boton-cancelar-editar-operacion">Cancelar</button>
+                <button class="button is-light" id="boton-cancelar-editar-operacion" type="button">Cancelar</button>
                 <input type="submit" class="button is-success" id="boton-editar-operacion" value="Editar">
             </div>
         </form>
@@ -428,6 +435,13 @@ const crearFormularioEditar = (id) => {
         obtenerGanancias();
         obtenerGastos();
         obtenerTotal();
+    }
+
+    const botonCancelarEditarOperacion = document.querySelector("#boton-cancelar-editar-operacion");
+
+    botonCancelarEditarOperacion.onclick = () => {
+        formularioEditarOperacion.classList.add("is-hidden");
+        seccionBalance.classList.remove("is-hidden");
     }
 }
 
@@ -495,7 +509,10 @@ formularioAgregarNuevaOperacion.onsubmit = (event) => {
     obtenerTotal();
 }
 
-
+botonCancelarNuevaOperacion.onclick = () => {
+    seccionNuevaOperacion.classList.add("is-hidden");
+    seccionBalance.classList.remove("is-hidden");
+}
 
 
 
