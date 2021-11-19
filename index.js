@@ -300,6 +300,15 @@ const aplicarColorAlMonto = (objeto) => {
     }
 }
 
+const aplicarSignoAlMonto = (objeto) => {
+    if (objeto.tipo === "ganancia") {
+        return "+$"
+    }
+    else {
+        return "-$"
+    }
+}
+
 const mostrarOperacionesEnHTML = () => {
     const operaciones = obtenerOperaciones();
     const operacionesEnHTML = operaciones.reduce((acc, elemento, index) => {
@@ -308,7 +317,7 @@ const mostrarOperacionesEnHTML = () => {
             <h3 class="column is-3 has-text-weight-semibold">${elemento.descripcion}</h3>
             <div class="column is-3" ><p class="tag is-primary is-light">${elemento.categoria}</p></div>
             <h3 class="column is-2 has-text-grey">${elemento.fecha}</h3>
-            <h3 class="column is-1 has-text-weight-bold ${aplicarColorAlMonto(elemento)}">${elemento.monto}</h3>
+            <h3 class="column is-1 has-text-weight-bold ${aplicarColorAlMonto(elemento)}">${aplicarSignoAlMonto(elemento)}${elemento.monto}</h3>
             <div class="columns column is-offset-1 is-1">
                 <button class="column is-2 button is-ghost is-size-7 boton-editar-operacion" id="boton-editar-operaciones-${index}">Editar</button>
                 <button class="button column is-offset-4 is-2 is-ghost is-size-7 boton-eliminar-operacion" id="boton-eliminar-operacion-${index}">Eliminar</button>
