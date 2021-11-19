@@ -241,7 +241,7 @@ const crearBotonesEliminarCategoria = () => {
 
 mostrarCategoriasEnHTML();
 
-// Seccion Operaciones
+// Sección Operaciones
 
 const operaciones = [];
 
@@ -467,9 +467,7 @@ obtenerTotal();
 
 formularioAgregarNuevaOperacion.onsubmit = (event) => {
     event.preventDefault()
-}
-
-botonAgregarNuevaOperacion.onclick = () => {
+    
     const operaciones = obtenerOperaciones()
     const nuevaOperacion = {
         descripcion: inputDescripcion.value, 
@@ -493,8 +491,6 @@ botonAgregarNuevaOperacion.onclick = () => {
     obtenerGastos();
     obtenerTotal();
 }
-
-
 
 
 
