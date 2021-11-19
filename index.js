@@ -1,3 +1,6 @@
+const menuHamburguesa = document.querySelector(".navbar-burger");
+const menuDeNavegacion = document.querySelector(".navbar-menu");
+const linksMenu = document.querySelectorAll(".navbar-item");
 const botonBalance = document.querySelector("#boton-balance");
 const seccionBalance = document.querySelector("#seccion-balance");
 const botonCategorias = document.querySelector("#boton-categorias");
@@ -51,6 +54,20 @@ const leerDesdeLocalStorage = (clave) => {
     const objetoDeJavascript = convertirDesdeJSON(objetoGuardado);
 
     return objetoDeJavascript;
+}
+
+// Menú para celulares
+
+menuHamburguesa.onclick = () => {
+    menuHamburguesa.classList.toggle("is-active");
+    menuDeNavegacion.classList.toggle("is-active");
+}
+
+for (let i = 0; i < linksMenu.length; i++) {
+    linksMenu[i].onclick = () => {
+        menuHamburguesa.classList.remove("is-active");
+    menuDeNavegacion.classList.remove("is-active");
+    }
 }
 
 // Función para que se vea la sección de Balance
