@@ -406,6 +406,9 @@ const crearFormularioEditar = (id) => {
     
     agregarNuevasCategoriasAlSelect(selectEditarCategoria);
 
+    selectEditarTipo.value = operaciones[id].tipo;
+    selectEditarCategoria.value = operaciones[id].categoria;
+
     formularioEditarOperacion.onsubmit = (event) => {
         event.preventDefault()
 
