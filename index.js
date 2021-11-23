@@ -31,6 +31,9 @@ const total = document.querySelector("#total");
 const seccionEditarCategoria = document.querySelector("#seccion-editar-categoria");
 const botonOcultarFiltros = document.querySelector("#boton-ocultar-filtros");
 const contenedorFiltros = document.querySelector("#contenedor-filtros");
+const selectFiltroTipo = document.querySelector("#select-filtro-tipo")
+const inputFiltroFecha = document.querySelector("#input-filtro-fecha")
+const selectFiltroOrden = document.querySelector("#select-filtro-orden")
 
 // Funciones auxiliares de JSON
 
@@ -324,9 +327,9 @@ const aplicarSignoAlMonto = (objeto) => {
     }
 }
 
-const mostrarOperacionesEnHTML = () => {
-    const operaciones = obtenerOperaciones();
-    const operacionesEnHTML = operaciones.reduce((acc, elemento, index) => {
+const mostrarOperacionesEnHTML = (array) => {
+    // const operaciones = obtenerOperaciones();
+    const operacionesEnHTML = array.reduce((acc, elemento, index) => {
         return acc + `
         <div class="columns"> 
             <h3 class="column is-3 has-text-weight-semibold">${elemento.descripcion}</h3>
@@ -431,7 +434,7 @@ const crearFormularioEditar = (id) => {
         seccionBalance.classList.remove("is-hidden")
 
         guardarEnLocalStorage(operaciones, "operaciones")
-        mostrarOperacionesEnHTML()
+        mostrarOperacionesEnHTML(obtenerOperaciones())
         obtenerGanancias();
         obtenerGastos();
         obtenerTotal();
@@ -456,7 +459,7 @@ const crearBotonesEliminar = () => {
            })
            operaciones = arrayFiltrado
            guardarEnLocalStorage(operaciones, "operaciones")
-           mostrarOperacionesEnHTML()
+           mostrarOperacionesEnHTML(obtenerOperaciones())
            obtenerGanancias();
            obtenerGastos();
            obtenerTotal();
@@ -474,13 +477,26 @@ const crearBotonesEditar = () => {
     }
 }
 
-mostrarOperacionesEnHTML()
+const ordernarOperacionesPorFecha = () => {
+    const operaciones = obtenerOperaciones()
+    operaciones.sort((a, b) => {
+        return new Date(b.fecha) - new Date(a.fecha)
+    })
+    mostrarOperacionesEnHTML(operaciones)
+}
+
+
+mostrarOperacionesEnHTML(obtenerOperaciones())
 
 obtenerGanancias();
 
 obtenerGastos();
 
 obtenerTotal();
+
+ordernarOperacionesPorFecha()
+
+
 
 formularioAgregarNuevaOperacion.onsubmit = (event) => {
     event.preventDefault()
@@ -503,7 +519,7 @@ formularioAgregarNuevaOperacion.onsubmit = (event) => {
     inputFecha.value = ""
 
     guardarEnLocalStorage(operaciones, "operaciones");
-    mostrarOperacionesEnHTML();
+    mostrarOperacionesEnHTML(obtenerOperaciones());
     obtenerGanancias();
     obtenerGastos();
     obtenerTotal();
@@ -515,6 +531,92 @@ botonCancelarNuevaOperacion.onclick = () => {
 }
 
 
+// Filtros
+
+const aplicarfiltroOrden = (array) => {
+    if (selectFiltroOrden.value === "mas-reciente") {
+        console.log("mas-reciente")
+        array.sort((a, b) => {
+            return new Date(b.fecha) - new Date(a.fecha)
+        })
+    }
+    else if (selectFiltroOrden.value === "menos-reciente") {
+        console.log("menos-reciente")
+        array.sort((a, b) => {
+            return new Date(a.fecha) - new Date(b.fecha)
+        }) 
+    }
+    else if (selectFiltroOrden.value === "mayor-monto") {
+        console.log("mayor-monto")
+        array.sort((a,b) => {
+            return a.monto - b.monto
+        })
+    }
+    else if (selectFiltroOrden.value === "menor-monto") {
+        console.log("menor-monto")
+        array.sort((a,b) => {
+            return b.monto - a.monto
+        })
+    }
+    else if (selectFiltroOrden.value === "a-z") {
+        console.log("a-z")
+        array.sort((a,b) => {
+            return a.descripcion - b.descripcion
+        })
+    }
+    else if (selectFiltroOrden.value === "z-a") {
+        console.log("z-a")
+        array.sort((a,b) => {
+            return b.descripcion - a.descripcion
+        })
+    }
+}
+
+const aplicarFiltros = () => {
+    const operaciones = obtenerOperaciones()
+    const filtradoPorTipo = operaciones.filter((elemento) => {
+        if (selectFiltroTipo.value === "todos") {
+            return elemento 
+        }
+        else { 
+            return elemento.tipo === selectFiltroTipo.value
+        }
+    })
+    const filtradoPorCategoria = filtradoPorTipo.filter((elemento) => {
+        return elemento.categoria === selectCategoriasFiltro.value
+    })
+
+    const filtradoPorOrden = aplicarfiltroOrden(filtradoPorCategoria)
+    return filtradoPorOrden
+    
+    // const operacionesOrdenadasPorFecha = filtradoPorCategoria.sort((a, b) => {
+    //     return new Date(b.fecha) - new Date(a.fecha)
+    // })
+    
+}
+
+
+selectFiltroTipo.onchange = () => {
+    const arrayFiltrado = aplicarFiltros()
+    mostrarOperacionesEnHTML(arrayFiltrado)
+
+}
+ 
+selectCategoriasFiltro.onchange = () => {
+    const arrayFiltrado = aplicarFiltros()
+    console.log(arrayFiltrado)
+    mostrarOperacionesEnHTML(arrayFiltrado)
+}
+
+// inputFiltroFecha.onchange = () => {
+//     const arrayFiltrado = aplicarFiltros()
+//     mostrarOperacionesEnHTML(arrayFiltrado)
+// }
+
+selectFiltroOrden.onchange = () => {
+    const arrayFiltrado = aplicarFiltros()
+    mostrarOperacionesEnHTML(arrayFiltrado)
+}
 
 
 
