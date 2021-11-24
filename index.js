@@ -536,38 +536,38 @@ botonCancelarNuevaOperacion.onclick = () => {
 const aplicarfiltroOrden = (array) => {
     if (selectFiltroOrden.value === "mas-reciente") {
         console.log("mas-reciente")
-        array.sort((a, b) => {
+        return array.sort((a, b) => {
             return new Date(b.fecha) - new Date(a.fecha)
         })
     }
     else if (selectFiltroOrden.value === "menos-reciente") {
         console.log("menos-reciente")
-        array.sort((a, b) => {
+        return array.sort((a, b) => {
             return new Date(a.fecha) - new Date(b.fecha)
         }) 
     }
     else if (selectFiltroOrden.value === "mayor-monto") {
         console.log("mayor-monto")
-        array.sort((a,b) => {
-            return a.monto - b.monto
+        return array.sort((a,b) => {
+            return b.monto - a.monto
         })
     }
     else if (selectFiltroOrden.value === "menor-monto") {
         console.log("menor-monto")
-        array.sort((a,b) => {
-            return b.monto - a.monto
+        return array.sort((a,b) => {
+            return a.monto - b.monto
         })
     }
     else if (selectFiltroOrden.value === "a-z") {
         console.log("a-z")
-        array.sort((a,b) => {
-            return a.descripcion - b.descripcion
+        return array.sort((a,b) => {
+            return b.descripcion - a.descripcion
         })
     }
     else if (selectFiltroOrden.value === "z-a") {
         console.log("z-a")
-        array.sort((a,b) => {
-            return b.descripcion - a.descripcion
+        return array.sort((a,b) => {
+            return a.descripcion - b.descripcion
         })
     }
 }
