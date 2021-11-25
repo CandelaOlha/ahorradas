@@ -535,37 +535,31 @@ botonCancelarNuevaOperacion.onclick = () => {
 
 const aplicarfiltroOrden = (array) => {
     if (selectFiltroOrden.value === "mas-reciente") {
-        console.log("mas-reciente")
         return array.sort((a, b) => {
             return new Date(b.fecha) - new Date(a.fecha)
         })
     }
     else if (selectFiltroOrden.value === "menos-reciente") {
-        console.log("menos-reciente")
         return array.sort((a, b) => {
             return new Date(a.fecha) - new Date(b.fecha)
         }) 
     }
     else if (selectFiltroOrden.value === "mayor-monto") {
-        console.log("mayor-monto")
         return array.sort((a,b) => {
             return b.monto - a.monto
         })
     }
     else if (selectFiltroOrden.value === "menor-monto") {
-        console.log("menor-monto")
         return array.sort((a,b) => {
             return a.monto - b.monto
         })
     }
     else if (selectFiltroOrden.value === "a-z") {
-        console.log("a-z")
         return array.sort((a,b) => {
             return b.descripcion - a.descripcion
         })
     }
     else if (selectFiltroOrden.value === "z-a") {
-        console.log("z-a")
         return array.sort((a,b) => {
             return a.descripcion - b.descripcion
         })
@@ -587,11 +581,12 @@ const aplicarFiltros = () => {
     })
 
     const filtradoPorOrden = aplicarfiltroOrden(filtradoPorCategoria)
-    return filtradoPorOrden
     
-    // const operacionesOrdenadasPorFecha = filtradoPorCategoria.sort((a, b) => {
-    //     return new Date(b.fecha) - new Date(a.fecha)
-    // })
+    const filtradoPorFecha = filtradoPorOrden.filter((elemento)=>{
+        return new Date(elemento.fecha) >= new Date(inputFiltroFecha.value)
+    })
+
+    return filtradoPorFecha
     
 }
 
@@ -608,10 +603,10 @@ selectCategoriasFiltro.onchange = () => {
     mostrarOperacionesEnHTML(arrayFiltrado)
 }
 
-// inputFiltroFecha.onchange = () => {
-//     const arrayFiltrado = aplicarFiltros()
-//     mostrarOperacionesEnHTML(arrayFiltrado)
-// }
+inputFiltroFecha.onchange = () => {
+    const arrayFiltrado = aplicarFiltros()
+    mostrarOperacionesEnHTML(arrayFiltrado)
+}
 
 selectFiltroOrden.onchange = () => {
     const arrayFiltrado = aplicarFiltros()
