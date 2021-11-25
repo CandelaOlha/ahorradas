@@ -139,6 +139,15 @@ const agregarNuevasCategoriasAlSelect = (select) => {
     select.innerHTML = categoriasEnHTML;
 }
 
+// const agregarNuevasCategoriasAlSelectFiltro = (select) => {
+//     const categorias = obtenerCategorias();
+//     const categoriasEnHTML = categorias.reduce((acc, elemento) => {
+//         return acc + `<option value="${elemento}">${elemento}</option>`
+//     }, "<option value='todas'>Todas</option>");
+    
+//     select.innerHTML = categoriasEnHTML;
+// }
+
 agregarNuevasCategoriasAlSelect(selectCategoriasFiltro);
 agregarNuevasCategoriasAlSelect(selectCategoriasNuevaOperacion);
 
@@ -560,6 +569,7 @@ const aplicarfiltroOrden = (array) => {
         })
     }
     else if (selectFiltroOrden.value === "z-a") {
+        console.log("z-a")
         return array.sort((a,b) => {
             return a.descripcion - b.descripcion
         })
