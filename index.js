@@ -633,100 +633,162 @@ selectFiltroOrden.onchange = () => {
     mostrarOperacionesEnHTML(arrayFiltrado)
 }
 
+// Seccion Reportes
 
+const obtenerCategoriaConMayorGanancia = (array) => {
+    return array.reduce((acc,elemento) => {
+      if (acc.monto < elemento.monto && elemento.tipo === "ganancia") {
+          acc = elemento
+      }
+      return elemento.categoria
+    })
+   }
 
+const sumaCategoriaConMayorGanancia = (array) => {
+    return array.reduce((acc, elemento) => {
+        if (elemento.tipo === "ganancia") {
+            acc = acc + Number(elemento.monto);
+        }
+        return acc;
+    }, 0)
+}
 
-// InnerHTML para Reportes
+const obtenerCategoriaConMayorGasto = (array) => {
+    return array.reduce((acc,elemento) => {
+      if (acc.monto < elemento.monto && elemento.tipo === "gasto") {
+          acc = elemento
+      }
+      return elemento.categoria
+    })
+   }
 
-/* <section class="section mt-4">
-<h3 class="title is-size-4 mb-5">Resumen</h3>
-<div class="columns is-mobile is-align-items-center">
-    <h4 class="column is-half has-text-weight-semibold">Categoría con mayor ganancia</h4>
-    <div class="column is-3 has-text-right">
-        <span class="tag is-primary is-light">Categoría</span>
-    </div>
-    <p class="column has-text-right has-text-success is-3 has-text-weight-semibold">+$100</p>
-</div>
-<div class="columns is-mobile is-align-items-center">
-    <h4 class="column is-half has-text-weight-semibold">Categoría con mayor gasto</h4>
-    <div class="column is-3 has-text-right">
-        <span class="tag is-primary is-light">Categoría</span>
-    </div>
-    <p class="column has-text-right has-text-danger is-3 has-text-weight-semibold">-$100</p>
-</div>
-<div class="columns is-mobile is-align-items-center">
-    <h4 class="column is-half has-text-weight-semibold">Categoría con mayor balance</h4>
-    <div class="column is-3 has-text-right">
-        <span class="tag is-primary is-light">Categoría</span>
-    </div>
-    <p class="column has-text-right is-3 has-text-weight-semibold">-$100</p>
-</div>
-<div class="columns is-mobile is-align-items-center">
-    <h4 class="column is-half has-text-weight-semibold">Mes con mayor ganancia</h4>
-    <div class="column is-3 has-text-right">
-        <p>3/11/2021</p>
-    </div>
-    <p class="column has-text-right has-text-success is-3 has-text-weight-semibold">+$100</p>
-</div>
-<div class="columns is-mobile is-align-items-center">
-    <h4 class="column is-half has-text-weight-semibold">Mes con mayor gasto</h4>
-    <div class="column is-3 has-text-right">
-        <p>3/11/2021</p>
-    </div>
-    <p class="column has-text-right has-text-danger is-3 has-text-weight-semibold">-$100</p>
-</div>
-</section>
-<section class="section mt-4">
-<h3 class="title is-size-4 mb-5">Totales por categorías</h3>
-<div class="columns is-mobile is-align-items-center">
-    <h4 class="column has-text-weight-semibold">Categorías</h4>
-    <div class="column has-text-right">
-        <h4 class="has-text-weight-semibold">Ganancias</h4>
-    </div>
-    <div class="column has-text-right">
-        <h4 class="has-text-weight-semibold">Gastos</h4>
-    </div>
-    <div class="column has-text-right">
-        <h4 class="has-text-weight-semibold">Balance</h4>
-    </div>
-</div>
-<div class="columns is-mobile is-align-items-center">
-    <h4 class="column has-text-weight-semibold">Categoría</h4>
-    <div class="column has-text-right">
-        <h4 class="has-text-success">+$200</h4>
-    </div>
-    <div class="column has-text-right">
-        <h4 class="has-text-danger">-$100</h4>
-    </div>
-    <div class="column has-text-right">
-        <h4>$100</h4>
-    </div>
-</div>
-</section>
-<section class="section mt-4">
-<h3 class="title is-size-4 mb-5">Totales por mes</h3>
-<div class="columns is-mobile is-align-items-center">
-    <h4 class="column has-text-weight-semibold">Mes</h4>
-    <div class="column has-text-right">
-        <h4 class="has-text-weight-semibold">Ganancias</h4>
-    </div>
-    <div class="column has-text-right">
-        <h4 class="has-text-weight-semibold">Gastos</h4>
-    </div>
-    <div class="column has-text-right">
-        <h4 class="has-text-weight-semibold">Balance</h4>
-    </div>
-</div>
-<div class="columns is-mobile is-align-items-center">
-    <h4 class="column has-text-weight-semibold">11/2021</h4>
-    <div class="column has-text-right">
-        <h4 class="has-text-success">+$200</h4>
-    </div>
-    <div class="column has-text-right">
-        <h4 class="has-text-danger">-$100</h4>
-    </div>
-    <div class="column has-text-right">
-        <h4>$100</h4>
-    </div>
-</div>
-</section> */
+const sumaCategoriaConMayorGasto = (array) => {
+    return array.reduce((acc, elemento) => {
+        if (elemento.tipo === "gasto") {
+            acc = acc + Number(elemento.monto);
+        }
+        return acc;
+    }, 0)
+}
+
+const mostrarReportes = () => {
+    let operaciones = obtenerOperaciones();
+        contenedorReportes.innerHTML = `
+        <h2 class="title is-2 has-text-weight-bold">Reportes</h2>
+        <section class="section mt-4">
+        <h3 class="title is-size-4 mb-5">Resumen</h3>
+        <div class="columns is-mobile is-align-items-center">
+            <h4 class="column is-half has-text-weight-semibold">Categoría con mayor ganancia</h4>
+            <div class="column is-3 has-text-right">
+                <span class="tag is-primary is-light">${obtenerCategoriaConMayorGanancia(operaciones)}</span>
+            </div>
+            <p class="column has-text-right has-text-success is-3 has-text-weight-semibold">+$${sumaCategoriaConMayorGanancia(operaciones)}</p>
+        </div>
+        <div class="columns is-mobile is-align-items-center">
+            <h4 class="column is-half has-text-weight-semibold">Categoría con mayor gasto</h4>
+            <div class="column is-3 has-text-right">
+                <span class="tag is-primary is-light">${obtenerCategoriaConMayorGasto(operaciones)}</span>
+            </div>
+            <p class="column has-text-right has-text-danger is-3 has-text-weight-semibold">-$${sumaCategoriaConMayorGasto(operaciones)}</p>
+        </div>
+        <div class="columns is-mobile is-align-items-center">
+            <h4 class="column is-half has-text-weight-semibold">Categoría con mayor balance</h4>
+            <div class="column is-3 has-text-right">
+                <span class="tag is-primary is-light">Categoría</span>
+            </div>
+            <p class="column has-text-right is-3 has-text-weight-semibold">-$0</p>
+        </div>
+        <div class="columns is-mobile is-align-items-center">
+            <h4 class="column is-half has-text-weight-semibold">Mes con mayor ganancia</h4>
+            <div class="column is-3 has-text-right">
+                <p>0/00/0000</p>
+            </div>
+            <p class="column has-text-right has-text-success is-3 has-text-weight-semibold">+$0</p>
+        </div>
+        <div class="columns is-mobile is-align-items-center">
+            <h4 class="column is-half has-text-weight-semibold">Mes con mayor gasto</h4>
+            <div class="column is-3 has-text-right">
+                <p>0/00/0000</p>
+            </div>
+            <p class="column has-text-right has-text-danger is-3 has-text-weight-semibold">-$0</p>
+        </div>
+        </section>
+        <section class="section mt-4">
+        <h3 class="title is-size-4 mb-5">Totales por categorías</h3>
+        <div class="columns is-mobile is-align-items-center">
+            <h4 class="column has-text-weight-semibold">Categorías</h4>
+            <div class="column has-text-right">
+                <h4 class="has-text-weight-semibold">Ganancias</h4>
+            </div>
+            <div class="column has-text-right">
+                <h4 class="has-text-weight-semibold">Gastos</h4>
+            </div>
+            <div class="column has-text-right">
+                <h4 class="has-text-weight-semibold">Balance</h4>
+            </div>
+        </div>
+        <div class="columns is-flex is-flex-direction-column is-mobile" id="contenedor-totales-categorias">
+        </div>
+        </section>
+        <section class="section mt-4">
+        <h3 class="title is-size-4 mb-5">Totales por mes</h3>
+        <div class="columns is-mobile is-align-items-center">
+            <h4 class="column has-text-weight-semibold">Mes</h4>
+            <div class="column has-text-right">
+                <h4 class="has-text-weight-semibold">Ganancias</h4>
+            </div>
+            <div class="column has-text-right">
+                <h4 class="has-text-weight-semibold">Gastos</h4>
+            </div>
+            <div class="column has-text-right">
+                <h4 class="has-text-weight-semibold">Balance</h4>
+            </div>
+        </div>
+        <div class="columns is-mobile is-align-items-center">
+            <h4 class="column has-text-weight-semibold">00/0000</h4>
+            <div class="column has-text-right">
+                <h4 class="has-text-success">+$0</h4>
+            </div>
+            <div class="column has-text-right">
+                <h4 class="has-text-danger">-$0</h4>
+            </div>
+            <div class="column has-text-right">
+                <h4>$0</h4>
+            </div>
+        </div>
+        </section>
+        `
+
+        const contenedorTotalesCategorias = document.querySelector("#contenedor-totales-categorias");
+
+        contenedorTotalesCategorias.innerHTML = agregarTotalesPorCategorias();
+
+    
+}
+
+// const sumaGananciasCategorias = () => {
+//     let categorias = obtenerCategorias();
+// }
+
+const agregarTotalesPorCategorias = () => { // No agrega las categorias correctas
+    let categorias = obtenerCategorias();
+    let operaciones = obtenerOperaciones();
+
+    const totalesPorCategorias = operaciones.reduce((acc, elemento) => {
+        return acc + `
+            <div class="column columns">
+                <h4 class="column has-text-weight-semibold">${elemento.categoria}</h4>
+                <div class="column has-text-right">
+                    <h4 class="has-text-success">+$0</h4>
+                </div>
+                <div class="column has-text-right">
+                    <h4 class="has-text-danger">-$0</h4>
+                </div>
+                <div class="column has-text-right">
+                    <h4>$0</h4>
+                </div>
+            </div>
+        `
+    }, "")
+    return totalesPorCategorias;
+}
