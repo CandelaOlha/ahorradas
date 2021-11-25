@@ -31,6 +31,9 @@ const total = document.querySelector("#total");
 const seccionEditarCategoria = document.querySelector("#seccion-editar-categoria");
 const botonOcultarFiltros = document.querySelector("#boton-ocultar-filtros");
 const contenedorFiltros = document.querySelector("#contenedor-filtros");
+const selectFiltroTipo = document.querySelector("#select-filtro-tipo")
+const inputFiltroFecha = document.querySelector("#input-filtro-fecha")
+const selectFiltroOrden = document.querySelector("#select-filtro-orden")
 
 // Funciones auxiliares de JSON
 
@@ -135,6 +138,15 @@ const agregarNuevasCategoriasAlSelect = (select) => {
     
     select.innerHTML = categoriasEnHTML;
 }
+
+// const agregarNuevasCategoriasAlSelectFiltro = (select) => {
+//     const categorias = obtenerCategorias();
+//     const categoriasEnHTML = categorias.reduce((acc, elemento) => {
+//         return acc + `<option value="${elemento}">${elemento}</option>`
+//     }, "<option value='todas'>Todas</option>");
+    
+//     select.innerHTML = categoriasEnHTML;
+// }
 
 agregarNuevasCategoriasAlSelect(selectCategoriasFiltro);
 agregarNuevasCategoriasAlSelect(selectCategoriasNuevaOperacion);
@@ -324,9 +336,9 @@ const aplicarSignoAlMonto = (objeto) => {
     }
 }
 
-const mostrarOperacionesEnHTML = () => {
-    const operaciones = obtenerOperaciones();
-    const operacionesEnHTML = operaciones.reduce((acc, elemento, index) => {
+const mostrarOperacionesEnHTML = (array) => {
+    // const operaciones = obtenerOperaciones();
+    const operacionesEnHTML = array.reduce((acc, elemento, index) => {
         return acc + `
         <div class="columns"> 
             <h3 class="column is-3 has-text-weight-semibold">${elemento.descripcion}</h3>
@@ -431,7 +443,7 @@ const crearFormularioEditar = (id) => {
         seccionBalance.classList.remove("is-hidden")
 
         guardarEnLocalStorage(operaciones, "operaciones")
-        mostrarOperacionesEnHTML()
+        mostrarOperacionesEnHTML(obtenerOperaciones())
         obtenerGanancias();
         obtenerGastos();
         obtenerTotal();
@@ -456,7 +468,7 @@ const crearBotonesEliminar = () => {
            })
            operaciones = arrayFiltrado
            guardarEnLocalStorage(operaciones, "operaciones")
-           mostrarOperacionesEnHTML()
+           mostrarOperacionesEnHTML(obtenerOperaciones())
            obtenerGanancias();
            obtenerGastos();
            obtenerTotal();
@@ -474,13 +486,26 @@ const crearBotonesEditar = () => {
     }
 }
 
-mostrarOperacionesEnHTML()
+const ordernarOperacionesPorFecha = () => {
+    const operaciones = obtenerOperaciones()
+    operaciones.sort((a, b) => {
+        return new Date(b.fecha) - new Date(a.fecha)
+    })
+    mostrarOperacionesEnHTML(operaciones)
+}
+
+
+mostrarOperacionesEnHTML(obtenerOperaciones())
 
 obtenerGanancias();
 
 obtenerGastos();
 
 obtenerTotal();
+
+ordernarOperacionesPorFecha()
+
+
 
 formularioAgregarNuevaOperacion.onsubmit = (event) => {
     event.preventDefault()
@@ -503,7 +528,7 @@ formularioAgregarNuevaOperacion.onsubmit = (event) => {
     inputFecha.value = ""
 
     guardarEnLocalStorage(operaciones, "operaciones");
-    mostrarOperacionesEnHTML();
+    mostrarOperacionesEnHTML(obtenerOperaciones());
     obtenerGanancias();
     obtenerGastos();
     obtenerTotal();
@@ -515,6 +540,88 @@ botonCancelarNuevaOperacion.onclick = () => {
 }
 
 
+// Filtros
+
+const aplicarfiltroOrden = (array) => {
+    if (selectFiltroOrden.value === "mas-reciente") {
+        return array.sort((a, b) => {
+            return new Date(b.fecha) - new Date(a.fecha)
+        })
+    }
+    else if (selectFiltroOrden.value === "menos-reciente") {
+        return array.sort((a, b) => {
+            return new Date(a.fecha) - new Date(b.fecha)
+        }) 
+    }
+    else if (selectFiltroOrden.value === "mayor-monto") {
+        return array.sort((a,b) => {
+            return b.monto - a.monto
+        })
+    }
+    else if (selectFiltroOrden.value === "menor-monto") {
+        return array.sort((a,b) => {
+            return a.monto - b.monto
+        })
+    }
+    else if (selectFiltroOrden.value === "a-z") {
+        return array.sort((a,b) => {
+            return b.descripcion - a.descripcion
+        })
+    }
+    else if (selectFiltroOrden.value === "z-a") {
+        console.log("z-a")
+        return array.sort((a,b) => {
+            return a.descripcion - b.descripcion
+        })
+    }
+}
+
+const aplicarFiltros = () => {
+    const operaciones = obtenerOperaciones()
+    const filtradoPorTipo = operaciones.filter((elemento) => {
+        if (selectFiltroTipo.value === "todos") {
+            return elemento 
+        }
+        else { 
+            return elemento.tipo === selectFiltroTipo.value
+        }
+    })
+    const filtradoPorCategoria = filtradoPorTipo.filter((elemento) => {
+        return elemento.categoria === selectCategoriasFiltro.value
+    })
+
+    const filtradoPorOrden = aplicarfiltroOrden(filtradoPorCategoria)
+    
+    const filtradoPorFecha = filtradoPorOrden.filter((elemento)=>{
+        return new Date(elemento.fecha) >= new Date(inputFiltroFecha.value)
+    })
+
+    return filtradoPorFecha
+    
+}
+
+
+selectFiltroTipo.onchange = () => {
+    const arrayFiltrado = aplicarFiltros()
+    mostrarOperacionesEnHTML(arrayFiltrado)
+
+}
+ 
+selectCategoriasFiltro.onchange = () => {
+    const arrayFiltrado = aplicarFiltros()
+    console.log(arrayFiltrado)
+    mostrarOperacionesEnHTML(arrayFiltrado)
+}
+
+inputFiltroFecha.onchange = () => {
+    const arrayFiltrado = aplicarFiltros()
+    mostrarOperacionesEnHTML(arrayFiltrado)
+}
+
+selectFiltroOrden.onchange = () => {
+    const arrayFiltrado = aplicarFiltros()
+    mostrarOperacionesEnHTML(arrayFiltrado)
+}
 
 
 
