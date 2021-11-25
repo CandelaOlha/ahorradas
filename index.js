@@ -189,7 +189,7 @@ const crearFormularioEditarCategoria = (id) => {
     seccionCategorias.classList.add("is-hidden")
 
     seccionEditarCategoria.innerHTML = `
-    <div class="box column is-8-desktop is-offset-2-desktop is-12-tablet">
+    <div class="box column is-8-desktop is-offset-2-desktop is-12-tablet" id="contenedor-formulario-editar-categoria">
         <h2 class="title is-2 has-text-weight-bold mb-6">Editar categoría</h2>
         <div class="field mb-6">
             <form action="" method="POST" id="formulario-editar-categoria">
@@ -207,6 +207,7 @@ const crearFormularioEditarCategoria = (id) => {
     `
     
     const formularioEditarCategoria = document.querySelector("#formulario-editar-categoria");
+    const contenedorFormularioEditarCategoria = document.querySelector('#contenedor-formulario-editar-categoria')
     const inputEditarCategoria = document.querySelector("#input-editar-categoria");
 
     formularioEditarCategoria.onsubmit = (event) => {
@@ -227,6 +228,7 @@ const crearFormularioEditarCategoria = (id) => {
 
     botonCancelarEditarCategoria.onclick = () => {
         formularioEditarCategoria.classList.add("is-hidden");
+        contenedorFormularioEditarCategoria.classList.add('is-hidden')
         seccionCategorias.classList.remove("is-hidden");
     }
 }
@@ -370,7 +372,7 @@ const crearFormularioEditar = (id) => {
     seccionEditarOperacion.classList.remove("is-hidden")
     seccionBalance.classList.add("is-hidden")
 
-    seccionEditarOperacion.innerHTML = `<div class="box column is-8-desktop is-offset-2-desktop is-12-tablet">
+    seccionEditarOperacion.innerHTML = `<div class="box column is-8-desktop is-offset-2-desktop is-12-tablet" id="contenedor-formulario-editar-operacion">
     <h2 class="title is-2 has-text-weight-bold mb-6">Editar operación</h2>
     <div class="field">
         <form action="" method="POST" id="formulario-editar-operacion">
@@ -417,6 +419,7 @@ const crearFormularioEditar = (id) => {
 </div>`
 
     const formularioEditarOperacion = document.querySelector("#formulario-editar-operacion")
+    const contenedorFormularioEditarOperacion = document.querySelector("#contenedor-formulario-editar-operacion")
     const inputEditarDescripcion = document.querySelector("#input-editar-descripcion")
     const inputEditarMonto = document.querySelector("#input-editar-monto")
     const selectEditarTipo = document.querySelector("#select-editar-tipo")
@@ -453,6 +456,7 @@ const crearFormularioEditar = (id) => {
 
     botonCancelarEditarOperacion.onclick = () => {
         formularioEditarOperacion.classList.add("is-hidden");
+        contenedorFormularioEditarOperacion.classList.add("is-hidden")
         seccionBalance.classList.remove("is-hidden");
     }
 }
