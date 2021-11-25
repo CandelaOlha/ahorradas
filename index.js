@@ -139,16 +139,16 @@ const agregarNuevasCategoriasAlSelect = (select) => {
     select.innerHTML = categoriasEnHTML;
 }
 
-// const agregarNuevasCategoriasAlSelectFiltro = (select) => {
-//     const categorias = obtenerCategorias();
-//     const categoriasEnHTML = categorias.reduce((acc, elemento) => {
-//         return acc + `<option value="${elemento}">${elemento}</option>`
-//     }, "<option value='todas'>Todas</option>");
+const agregarNuevasCategoriasAlSelectFiltro = (select) => {
+    const categorias = obtenerCategorias();
+    const categoriasEnHTML = categorias.reduce((acc, elemento) => {
+        return acc + `<option value="${elemento}">${elemento}</option>`
+    }, "<option value='todas'>Todas</option>");
     
-//     select.innerHTML = categoriasEnHTML;
-// }
+    select.innerHTML = categoriasEnHTML;
+}
 
-agregarNuevasCategoriasAlSelect(selectCategoriasFiltro);
+agregarNuevasCategoriasAlSelectFiltro(selectCategoriasFiltro);
 agregarNuevasCategoriasAlSelect(selectCategoriasNuevaOperacion);
 
 const mostrarCategoriasEnHTML = () => {
@@ -584,6 +584,7 @@ const aplicarFiltros = () => {
     const operaciones = obtenerOperaciones()
     const filtradoPorTipo = operaciones.filter((elemento) => {
         if (selectFiltroTipo.value === "todos") {
+            console.log(elemento)
             return elemento 
         }
         else { 
@@ -591,7 +592,12 @@ const aplicarFiltros = () => {
         }
     })
     const filtradoPorCategoria = filtradoPorTipo.filter((elemento) => {
-        return elemento.categoria === selectCategoriasFiltro.value
+        if (filtradoPorTipo.value === "todas") {
+            return elemento
+        }
+        else {
+            return elemento.categoria === selectCategoriasFiltro.value
+        }
     })
 
     const filtradoPorOrden = aplicarfiltroOrden(filtradoPorCategoria)
