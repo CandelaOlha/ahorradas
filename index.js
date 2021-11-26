@@ -312,9 +312,6 @@ const obtenerTotal = () => {
     const ganancias = obtenerGanancias();
     const gastos = obtenerGastos();
 
-    console.log(ganancias);
-    console.log(gastos);
-
     const resultado = ganancias - gastos;
 
     total.textContent = resultado;
@@ -339,7 +336,6 @@ const aplicarSignoAlMonto = (objeto) => {
 }
 
 const mostrarOperacionesEnHTML = (array) => {
-    // const operaciones = obtenerOperaciones();
     const operacionesEnHTML = array.reduce((acc, elemento, index) => {
         return acc + `
         <div class="columns"> 
@@ -492,12 +488,13 @@ const crearBotonesEditar = () => {
 
 const ordernarOperacionesPorFecha = () => {
     const operaciones = obtenerOperaciones()
-    operaciones.sort((a, b) => {
+    
+    const operacionesOrdenadas = operaciones.sort((a, b) => {
         return new Date(b.fecha) - new Date(a.fecha)
     })
-    mostrarOperacionesEnHTML(operaciones)
-}
 
+    mostrarOperacionesEnHTML(operacionesOrdenadas)
+}
 
 mostrarOperacionesEnHTML(obtenerOperaciones())
 
@@ -508,8 +505,6 @@ obtenerGastos();
 obtenerTotal();
 
 ordernarOperacionesPorFecha()
-
-
 
 formularioAgregarNuevaOperacion.onsubmit = (event) => {
     event.preventDefault()
@@ -543,7 +538,6 @@ botonCancelarNuevaOperacion.onclick = () => {
     seccionBalance.classList.remove("is-hidden");
 }
 
-
 // Filtros
 
 const aplicarfiltroOrden = (array) => {
@@ -558,23 +552,22 @@ const aplicarfiltroOrden = (array) => {
         }) 
     }
     else if (selectFiltroOrden.value === "mayor-monto") {
-        return array.sort((a,b) => {
+        return array.sort((a, b) => {
             return b.monto - a.monto
         })
     }
     else if (selectFiltroOrden.value === "menor-monto") {
-        return array.sort((a,b) => {
+        return array.sort((a, b) => {
             return a.monto - b.monto
         })
     }
     else if (selectFiltroOrden.value === "a-z") {
-        return array.sort((a,b) => {
+        return array.sort((a, b) => {
             return b.descripcion - a.descripcion
         })
     }
     else if (selectFiltroOrden.value === "z-a") {
-        console.log("z-a")
-        return array.sort((a,b) => {
+        return array.sort((a, b) => {
             return a.descripcion - b.descripcion
         })
     }
@@ -592,7 +585,7 @@ const aplicarFiltros = () => {
         }
     })
     const filtradoPorCategoria = filtradoPorTipo.filter((elemento) => {
-        if (filtradoPorTipo.value === "todas") {
+        if (selectCategoriasFiltro.value === "todas") {
             return elemento
         }
         else {
@@ -602,14 +595,17 @@ const aplicarFiltros = () => {
 
     const filtradoPorOrden = aplicarfiltroOrden(filtradoPorCategoria)
     
-    const filtradoPorFecha = filtradoPorOrden.filter((elemento)=>{
-        return new Date(elemento.fecha) >= new Date(inputFiltroFecha.value)
+    const filtradoPorFecha = filtradoPorOrden.filter((elemento) => {
+        if (inputFiltroFecha.value) {
+            return new Date(elemento.fecha) >= new Date(inputFiltroFecha.value)
+        }
+        else {
+            return elemento
+        }
     })
 
     return filtradoPorFecha
-    
 }
-
 
 selectFiltroTipo.onchange = () => {
     const arrayFiltrado = aplicarFiltros()
@@ -633,7 +629,7 @@ selectFiltroOrden.onchange = () => {
     mostrarOperacionesEnHTML(arrayFiltrado)
 }
 
-// Seccion Reportes
+// Sección Reportes
 
 const obtenerCategoriaConMayorGanancia = (array) => {
     return array.reduce((acc,elemento) => {
@@ -761,9 +757,7 @@ const mostrarReportes = () => {
 
         const contenedorTotalesCategorias = document.querySelector("#contenedor-totales-categorias");
 
-        contenedorTotalesCategorias.innerHTML = agregarTotalesPorCategorias();
-
-    
+        contenedorTotalesCategorias.innerHTML = agregarTotalesPorCategorias();   
 }
 
 // const sumaGananciasCategorias = () => {
@@ -790,5 +784,6 @@ const agregarTotalesPorCategorias = () => { // No agrega las categorias correcta
             </div>
         `
     }, "")
+
     return totalesPorCategorias;
 }
