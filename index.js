@@ -813,41 +813,33 @@ const separarPorCategoria = () => { // Devuelve un array de operaciones separada
     return arrayOperacionesPorCategoria;
 }
 
-const obtenerGananciasPorCategorias = () => {
+const obtenerGananciasPorCategorias = (indiceCategoria) => {
     const operacionesPorCategoria = separarPorCategoria();
-
-    console.log(operacionesPorCategoria)
-
+    const operacionesCategoriaElegida = operacionesPorCategoria[indiceCategoria];
+  
     let sumaGananciasPorCategoria = 0;
-
-    for (let i = 0; i < operacionesPorCategoria.length; i++) {
-    
-        for (let j = 0; j < operacionesPorCategoria[i].length; j++) {
-            
-            const gananciasPorCategoria = operacionesPorCategoria[i].filter((elemento) => {
-                return elemento.tipo === "ganancia";
-            })
-
-            console.log(gananciasPorCategoria);
-    
-            sumaGananciasPorCategoria = gananciasPorCategoria.reduce((acc, elemento) => {
-                return acc + Number(elemento.monto);
-            }, 0)
-        }
-    }
-
+  
+    const gananciasPorCategoria = operacionesCategoriaElegida.filter((elemento) => {
+        return elemento.tipo === "ganancia";
+      }
+    );
+  
+    sumaGananciasPorCategoria = gananciasPorCategoria.reduce((acc, elemento) => {
+      return acc + Number(elemento.monto);
+    }, 0);
+  
     return sumaGananciasPorCategoria;
-}
+  };
 
 const agregarTotalesPorCategorias = () => {
     const categorias = obtenerCategorias();
 
-    const totalesPorCategorias = categorias.reduce((acc, elemento) => {
+    const totalesPorCategorias = categorias.reduce((acc, elemento, index) => {
         return acc + `
             <div class="column columns my-0 py-0">
                 <h4 class="column has-text-weight-semibold">${elemento}</h4>
                 <div class="column has-text-right">
-                    <h4 class="has-text-success">+${obtenerGananciasPorCategorias()}</h4>
+                    <h4 class="has-text-success">+${obtenerGananciasPorCategorias(index)}</h4>
                 </div>
                 <div class="column has-text-right">
                     <h4 class="has-text-danger">-$0</h4>
