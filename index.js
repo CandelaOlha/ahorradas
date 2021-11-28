@@ -831,7 +831,7 @@ const obtenerGananciasPorCategorias = (indiceCategoria) => {
     return sumaGananciasPorCategoria;
   };
 
-  const obtenerGastosPorCategorias = (indiceCategoria) => {
+const obtenerGastosPorCategorias = (indiceCategoria) => {
     const operacionesPorCategoria = separarPorCategoria();
     const operacionesCategoriaElegida = operacionesPorCategoria[indiceCategoria];
   
@@ -847,7 +847,21 @@ const obtenerGananciasPorCategorias = (indiceCategoria) => {
     }, 0);
   
     return sumaGastosPorCategoria;
-  };
+};
+
+const obtenerBalancePorCategorias = (indiceCategoria) => {
+    const operacionesPorCategoria = separarPorCategoria();
+    const operacionesCategoriaElegida = operacionesPorCategoria[indiceCategoria];
+
+    const totalesPorCategoria = operacionesCategoriaElegida.reduce((acc, elemento) => {
+        const gananciasPorCategoria = obtenerGananciasPorCategorias(indiceCategoria);
+        const gastosPorCategoria = obtenerGastosPorCategorias(indiceCategoria);
+
+        return gananciasPorCategoria - gastosPorCategoria;
+    }, 0)
+
+    return totalesPorCategoria;
+}
 
 const agregarTotalesPorCategorias = () => {
     const categorias = obtenerCategorias();
@@ -857,13 +871,13 @@ const agregarTotalesPorCategorias = () => {
             <div class="column columns my-0 py-0">
                 <h4 class="column has-text-weight-semibold">${elemento}</h4>
                 <div class="column has-text-right">
-                    <h4 class="has-text-success">+${obtenerGananciasPorCategorias(index)}</h4>
+                    <h4 class="has-text-success">+$${obtenerGananciasPorCategorias(index)}</h4>
                 </div>
                 <div class="column has-text-right">
-                    <h4 class="has-text-danger">-${obtenerGastosPorCategorias(index)}</h4>
+                    <h4 class="has-text-danger">-$${obtenerGastosPorCategorias(index)}</h4>
                 </div>
                 <div class="column has-text-right">
-                    <h4>$0</h4>
+                    <h4>$${obtenerBalancePorCategorias(index)}</h4>
                 </div>
             </div>
         `
