@@ -31,9 +31,11 @@ const total = document.querySelector("#total");
 const seccionEditarCategoria = document.querySelector("#seccion-editar-categoria");
 const botonOcultarFiltros = document.querySelector("#boton-ocultar-filtros");
 const contenedorFiltros = document.querySelector("#contenedor-filtros");
-const selectFiltroTipo = document.querySelector("#select-filtro-tipo")
-const inputFiltroFecha = document.querySelector("#input-filtro-fecha")
-const selectFiltroOrden = document.querySelector("#select-filtro-orden")
+const selectFiltroTipo = document.querySelector("#select-filtro-tipo");
+const inputFiltroFecha = document.querySelector("#input-filtro-fecha");
+const selectFiltroOrden = document.querySelector("#select-filtro-orden");
+const contenedorReportes = document.querySelector("#contenedor-reportes");
+const contenedorReportesVacios = document.querySelector("#contenedor-reportes-vacios");
 
 // Funciones auxiliares de JSON
 
@@ -96,6 +98,13 @@ botonReportes.onclick = () => {
     seccionBalance.classList.add("is-hidden");
     seccionCategorias.classList.add("is-hidden");
     seccionNuevaOperacion.classList.add("is-hidden");
+
+    let operaciones = obtenerOperaciones();
+
+    if (operaciones.length >= 3) {
+        contenedorReportesVacios.classList.add("is-hidden");
+        mostrarReportes();
+    }
 }
 
 botonNuevaOperacion.onclick = () => {
@@ -371,10 +380,7 @@ const mostrarOperacionesEnHTML = (array) => {
     crearBotonesEliminar()
     crearBotonesEditar()
 
-    
-
     if (array.length > 0) {
-        console.log(array)
         contenedorCategoriasOperaciones.classList.remove("is-hidden");
         contenedorOperaciones.classList.remove("is-hidden");
         contenedorOperacionesVacio.classList.add("is-hidden");
@@ -387,7 +393,6 @@ const mostrarOperacionesEnHTML = (array) => {
         contenedorOperacionesVacio.classList.remove("is-hidden");
         seccionNuevaOperacion.classList.add("is-hidden");
         seccionBalance.classList.remove("is-hidden");
-
     }
 }
 
@@ -660,13 +665,13 @@ selectFiltroOrden.onchange = () => {
 
 // Sección Reportes
 
-const obtenerCategoriaConMayorGanancia = (array) => {
+const obtenerCategoriaConMayorGanancia = (array) => { // No funciona
     return array.reduce((acc,elemento) => {
-      if (acc.monto < elemento.monto && elemento.tipo === "ganancia") {
-          acc = elemento
-      }
-      return elemento.categoria
-    })
+        if (elemento.tipo === "ganancia" && elemento.monto > acc.monto) {
+            acc = elemento
+        }
+        return elemento.categoria
+      })
    }
 
 const sumaCategoriaConMayorGanancia = (array) => {
@@ -678,9 +683,9 @@ const sumaCategoriaConMayorGanancia = (array) => {
     }, 0)
 }
 
-const obtenerCategoriaConMayorGasto = (array) => {
+const obtenerCategoriaConMayorGasto = (array) => { // No funciona
     return array.reduce((acc,elemento) => {
-      if (acc.monto < elemento.monto && elemento.tipo === "gasto") {
+      if (elemento.tipo === "gasto" && elemento.monto > acc.monto) {
           acc = elemento
       }
       return elemento.categoria
@@ -698,8 +703,8 @@ const sumaCategoriaConMayorGasto = (array) => {
 
 const mostrarReportes = () => {
     let operaciones = obtenerOperaciones();
+
         contenedorReportes.innerHTML = `
-        <h2 class="title is-2 has-text-weight-bold">Reportes</h2>
         <section class="section mt-4">
         <h3 class="title is-size-4 mb-5">Resumen</h3>
         <div class="columns is-mobile is-align-items-center">
@@ -789,20 +794,60 @@ const mostrarReportes = () => {
         contenedorTotalesCategorias.innerHTML = agregarTotalesPorCategorias();   
 }
 
-// const sumaGananciasCategorias = () => {
-//     let categorias = obtenerCategorias();
-// }
+const separarPorCategoria = () => { // Devuelve un array de operaciones separadas por categoría
 
-const agregarTotalesPorCategorias = () => { // No agrega las categorias correctas
-    let categorias = obtenerCategorias();
-    let operaciones = obtenerOperaciones();
+    const categorias = obtenerCategorias();
+    const operaciones = obtenerOperaciones();
 
-    const totalesPorCategorias = operaciones.reduce((acc, elemento) => {
+    let arrayOperacionesPorCategoria = [];
+
+    categorias.map((elemento) => {
+        arrayOperacionesPorCategoria.push([]);
+    })
+
+    operaciones.map((elemento) => {
+        const indiceCategoria = categorias.indexOf(elemento.categoria);
+        arrayOperacionesPorCategoria[indiceCategoria].push(elemento)
+    })
+
+    return arrayOperacionesPorCategoria;
+}
+
+const obtenerGananciasPorCategorias = () => {
+    const operacionesPorCategoria = separarPorCategoria();
+
+    console.log(operacionesPorCategoria)
+
+    let sumaGananciasPorCategoria = 0;
+
+    for (let i = 0; i < operacionesPorCategoria.length; i++) {
+    
+        for (let j = 0; j < operacionesPorCategoria[i].length; j++) {
+            
+            const gananciasPorCategoria = operacionesPorCategoria[i].filter((elemento) => {
+                return elemento.tipo === "ganancia";
+            })
+
+            console.log(gananciasPorCategoria);
+    
+            sumaGananciasPorCategoria = gananciasPorCategoria.reduce((acc, elemento) => {
+                return acc + Number(elemento.monto);
+            }, 0)
+        }
+    }
+
+    return sumaGananciasPorCategoria;
+}
+
+const agregarTotalesPorCategorias = () => {
+    const categorias = obtenerCategorias();
+
+    const totalesPorCategorias = categorias.reduce((acc, elemento) => {
         return acc + `
-            <div class="column columns">
-                <h4 class="column has-text-weight-semibold">${elemento.categoria}</h4>
+            <div class="column columns my-0 py-0">
+                <h4 class="column has-text-weight-semibold">${elemento}</h4>
                 <div class="column has-text-right">
-                    <h4 class="has-text-success">+$0</h4>
+                    <h4 class="has-text-success">+${obtenerGananciasPorCategorias()}</h4>
                 </div>
                 <div class="column has-text-right">
                     <h4 class="has-text-danger">-$0</h4>
@@ -816,5 +861,3 @@ const agregarTotalesPorCategorias = () => { // No agrega las categorias correcta
 
     return totalesPorCategorias;
 }
-
-
