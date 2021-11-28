@@ -335,6 +335,22 @@ const aplicarSignoAlMonto = (objeto) => {
     }
 }
 
+// const mostrarImagenDefault = () => {
+//     const operaciones = obtenerOperaciones()
+//     console.log(operaciones)
+//     if (operaciones.length >= 1) {
+//         console.log("hayoperaciones")
+//         mostrarOperacionesEnHTML(operaciones)
+//     }
+//     else {
+//         console.log("NO HAY OPERACIONES")
+//         contenedorOperacionesVacio.classList.add("is-hidden")
+//         contenedorCategoriasOperaciones.classList.remove("is-hidden")  
+
+//     }
+// }
+
+
 const mostrarOperacionesEnHTML = (array) => {
     const operacionesEnHTML = array.reduce((acc, elemento, index) => {
         return acc + `
@@ -355,11 +371,24 @@ const mostrarOperacionesEnHTML = (array) => {
     crearBotonesEliminar()
     crearBotonesEditar()
 
-    contenedorCategoriasOperaciones.classList.remove("is-hidden");
-    contenedorOperaciones.classList.remove("is-hidden");
-    contenedorOperacionesVacio.classList.add("is-hidden");
-    seccionNuevaOperacion.classList.add("is-hidden");
-    seccionBalance.classList.remove("is-hidden");
+    
+
+    if (array.length > 0) {
+        console.log(array)
+        contenedorCategoriasOperaciones.classList.remove("is-hidden");
+        contenedorOperaciones.classList.remove("is-hidden");
+        contenedorOperacionesVacio.classList.add("is-hidden");
+        seccionNuevaOperacion.classList.add("is-hidden");
+        seccionBalance.classList.remove("is-hidden");
+    }
+    else {
+        contenedorCategoriasOperaciones.classList.add("is-hidden");
+        contenedorOperaciones.classList.add("is-hidden");
+        contenedorOperacionesVacio.classList.remove("is-hidden");
+        seccionNuevaOperacion.classList.add("is-hidden");
+        seccionBalance.classList.remove("is-hidden");
+
+    }
 }
 
 const crearFormularioEditar = (id) => {
@@ -787,3 +816,5 @@ const agregarTotalesPorCategorias = () => { // No agrega las categorias correcta
 
     return totalesPorCategorias;
 }
+
+
