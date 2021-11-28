@@ -831,6 +831,24 @@ const obtenerGananciasPorCategorias = (indiceCategoria) => {
     return sumaGananciasPorCategoria;
   };
 
+  const obtenerGastosPorCategorias = (indiceCategoria) => {
+    const operacionesPorCategoria = separarPorCategoria();
+    const operacionesCategoriaElegida = operacionesPorCategoria[indiceCategoria];
+  
+    let sumaGastosPorCategoria = 0;
+  
+    const gastosPorCategoria = operacionesCategoriaElegida.filter((elemento) => {
+        return elemento.tipo === "gasto";
+      }
+    );
+  
+    sumaGastosPorCategoria = gastosPorCategoria.reduce((acc, elemento) => {
+      return acc + Number(elemento.monto);
+    }, 0);
+  
+    return sumaGastosPorCategoria;
+  };
+
 const agregarTotalesPorCategorias = () => {
     const categorias = obtenerCategorias();
 
@@ -842,7 +860,7 @@ const agregarTotalesPorCategorias = () => {
                     <h4 class="has-text-success">+${obtenerGananciasPorCategorias(index)}</h4>
                 </div>
                 <div class="column has-text-right">
-                    <h4 class="has-text-danger">-$0</h4>
+                    <h4 class="has-text-danger">-${obtenerGastosPorCategorias(index)}</h4>
                 </div>
                 <div class="column has-text-right">
                     <h4>$0</h4>
