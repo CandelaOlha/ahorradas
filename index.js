@@ -723,8 +723,13 @@ const sumaCategoriaConMayorGasto = (array) => {
     return sumaGastos;
 }
 
+// Nos quedó pendiente:
+// Categoría con mayor balance
+// Mes con mayor ganancia
+// Mes con mayor gasto
+
 const mostrarReportes = () => {
-    let operaciones = obtenerOperaciones();
+    const operaciones = obtenerOperaciones();
 
         contenedorReportes.innerHTML = `
         <section class="section mt-4">
