@@ -665,44 +665,71 @@ selectFiltroOrden.onchange = () => {
 
 // Sección Reportes
 
-const obtenerCategoriaConMayorGanancia = (array) => { // No funciona
-    return array.reduce((acc,elemento) => {
-        if (elemento.tipo === "ganancia" && elemento.monto > acc.monto) {
-            acc = elemento
+const obtenerCategoriaConMayorGanancia = (array) => {
+    const ganancias = array.filter((elemento) => {
+        return elemento.tipo === "ganancia";
+    })
+
+    const operacionConMayorGanancia = ganancias.reduce((acc, elemento) => {
+        if (Number(elemento.monto) > Number(acc.monto)) {
+            acc = elemento;
         }
-        return elemento.categoria
-      })
+        return acc;
+    })
+
+    return operacionConMayorGanancia.categoria;
    }
 
 const sumaCategoriaConMayorGanancia = (array) => {
-    return array.reduce((acc, elemento) => {
-        if (elemento.tipo === "ganancia") {
-            acc = acc + Number(elemento.monto);
-        }
-        return acc;
-    }, 0)
+    const categoriaConMayorGanancia = obtenerCategoriaConMayorGanancia(array);
+
+    const operacionesCategoriaMayorGanancia = array.filter((elemento) => {
+        return elemento.categoria === categoriaConMayorGanancia && elemento.tipo === "ganancia";
+    })
+
+    const sumaGanancias = operacionesCategoriaMayorGanancia.reduce((acc, elemento) => {
+        return acc + Number(elemento.monto);
+    }, 0) 
+
+    return sumaGanancias;
 }
 
-const obtenerCategoriaConMayorGasto = (array) => { // No funciona
-    return array.reduce((acc,elemento) => {
-      if (elemento.tipo === "gasto" && elemento.monto > acc.monto) {
-          acc = elemento
-      }
-      return elemento.categoria
+const obtenerCategoriaConMayorGasto = (array) => {
+    const gastos = array.filter((elemento) => {
+        return elemento.tipo === "gasto";
     })
+
+    const operacionConMayorGasto = gastos.reduce((acc, elemento) => {
+        if (Number(elemento.monto) > Number(acc.monto)) {
+            acc = elemento;
+        }
+        return acc;
+    })
+
+    return operacionConMayorGasto.categoria;
    }
 
 const sumaCategoriaConMayorGasto = (array) => {
-    return array.reduce((acc, elemento) => {
-        if (elemento.tipo === "gasto") {
-            acc = acc + Number(elemento.monto);
-        }
-        return acc;
-    }, 0)
+    const categoriaConMayorGasto = obtenerCategoriaConMayorGasto(array);
+
+    const operacionesCategoriaMayorGasto = array.filter((elemento) => {
+        return elemento.categoria === categoriaConMayorGasto && elemento.tipo === "gasto";
+    })
+
+    const sumaGastos = operacionesCategoriaMayorGasto.reduce((acc, elemento) => {
+        return acc + Number(elemento.monto);
+    }, 0) 
+
+    return sumaGastos;
 }
 
+// Nos quedó pendiente:
+// Categoría con mayor balance
+// Mes con mayor ganancia
+// Mes con mayor gasto
+
 const mostrarReportes = () => {
-    let operaciones = obtenerOperaciones();
+    const operaciones = obtenerOperaciones();
 
         contenedorReportes.innerHTML = `
         <section class="section mt-4">
