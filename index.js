@@ -99,7 +99,7 @@ botonReportes.onclick = () => {
     seccionCategorias.classList.add("is-hidden");
     seccionNuevaOperacion.classList.add("is-hidden");
 
-    let operaciones = obtenerOperaciones();
+    const operaciones = obtenerOperaciones();
 
     if (operaciones.length >= 3) {
         contenedorReportesVacios.classList.add("is-hidden");
@@ -116,6 +116,7 @@ botonNuevaOperacion.onclick = () => {
 
 botonOcultarFiltros.onclick = () => {
     contenedorFiltros.classList.toggle("is-hidden");
+
     if (botonOcultarFiltros.textContent === "Ocultar filtros") {
         botonOcultarFiltros.textContent = "Mostrar filtros";
     }
@@ -130,6 +131,7 @@ const categorias = ["Comidas", "Servicios", "Salidas", "Educación", "Transporte
 
 const obtenerCategorias = () => {
     const categoriasEnLocalStorage = leerDesdeLocalStorage("categorias");
+
     if (categoriasEnLocalStorage === null) {
         return categorias;
     }
@@ -141,6 +143,7 @@ const obtenerCategorias = () => {
 
 const agregarNuevasCategoriasAlSelect = (select) => {
     const categorias = obtenerCategorias();
+
     const categoriasEnHTML = categorias.reduce((acc, elemento) => {
         return acc + `<option value="${elemento}">${elemento}</option>`
     }, "");
@@ -150,6 +153,7 @@ const agregarNuevasCategoriasAlSelect = (select) => {
 
 const agregarNuevasCategoriasAlSelectFiltro = (select) => {
     const categorias = obtenerCategorias();
+
     const categoriasEnHTML = categorias.reduce((acc, elemento) => {
         return acc + `<option value="${elemento}">${elemento}</option>`
     }, "<option value='todas'>Todas</option>");
@@ -162,6 +166,7 @@ agregarNuevasCategoriasAlSelect(selectCategoriasNuevaOperacion);
 
 const mostrarCategoriasEnHTML = () => {
     const categorias = obtenerCategorias();
+
     const categoriasEnHTML = categorias.reduce((acc, elemento, index) => {
         return acc + `<div class="columns is-mobile">
         <div class="column">
@@ -173,6 +178,7 @@ const mostrarCategoriasEnHTML = () => {
         </div>
     </div>`
     }, "");
+
     contenedorCategorias.innerHTML = categoriasEnHTML;
 
     crearBotonesEditarCategoria();
@@ -182,17 +188,19 @@ const mostrarCategoriasEnHTML = () => {
 botonAgregarCategoria.onclick = () => {
     const categorias = obtenerCategorias();
     const nuevaCategoria = inputNuevaCategoria.value;
+
     categorias.push(nuevaCategoria);
+
     inputNuevaCategoria.value = "";
+
     guardarEnLocalStorage(categorias, "categorias");
     agregarNuevasCategoriasAlSelect(selectCategoriasFiltro);
     agregarNuevasCategoriasAlSelect(selectCategoriasNuevaOperacion);    
-    // agregarNuevasCategoriasAlSelect();
     mostrarCategoriasEnHTML();
 }
 
 const crearFormularioEditarCategoria = (id) => {
-    let categorias = obtenerCategorias();
+    const categorias = obtenerCategorias();
 
     seccionEditarCategoria.classList.remove("is-hidden")
     seccionCategorias.classList.add("is-hidden")
@@ -222,7 +230,7 @@ const crearFormularioEditarCategoria = (id) => {
     formularioEditarCategoria.onsubmit = (event) => {
         event.preventDefault();
 
-        let categorias = obtenerCategorias();
+        const categorias = obtenerCategorias();
 
         categorias[id] = inputEditarCategoria.value;
 
@@ -244,6 +252,7 @@ const crearFormularioEditarCategoria = (id) => {
 
 const crearBotonesEditarCategoria = () => {
     const botonesEditarCategoria = document.querySelectorAll(".boton-editar-categoria");
+
     for (let i = 0; i < botonesEditarCategoria.length; i++) {
         botonesEditarCategoria[i].onclick = () => {
            const idBotonEditarCategoria = Number(botonesEditarCategoria[i].id.slice(23));
@@ -254,7 +263,8 @@ const crearBotonesEditarCategoria = () => {
 }
 
 const crearBotonesEliminarCategoria = () => {
-    const botonesEliminarCategoria = document.querySelectorAll(".boton-eliminar-categoria")
+    const botonesEliminarCategoria = document.querySelectorAll(".boton-eliminar-categoria");
+    
     for (let i = 0; i < botonesEliminarCategoria.length; i++) {
         botonesEliminarCategoria[i].onclick = () => {
            let categorias = obtenerCategorias()
@@ -277,6 +287,7 @@ const operaciones = [];
 
 const obtenerOperaciones = () => {
     const operacionesEnLocalStorage = leerDesdeLocalStorage("operaciones");
+
     if (operacionesEnLocalStorage !== null) {
         return operacionesEnLocalStorage;
     }
@@ -344,22 +355,6 @@ const aplicarSignoAlMonto = (objeto) => {
     }
 }
 
-// const mostrarImagenDefault = () => {
-//     const operaciones = obtenerOperaciones()
-//     console.log(operaciones)
-//     if (operaciones.length >= 1) {
-//         console.log("hayoperaciones")
-//         mostrarOperacionesEnHTML(operaciones)
-//     }
-//     else {
-//         console.log("NO HAY OPERACIONES")
-//         contenedorOperacionesVacio.classList.add("is-hidden")
-//         contenedorCategoriasOperaciones.classList.remove("is-hidden")  
-
-//     }
-// }
-
-
 const mostrarOperacionesEnHTML = (array) => {
     const operacionesEnHTML = array.reduce((acc, elemento, index) => {
         return acc + `
@@ -397,12 +392,13 @@ const mostrarOperacionesEnHTML = (array) => {
 }
 
 const crearFormularioEditar = (id) => {
-    let operaciones = obtenerOperaciones()
+    const operaciones = obtenerOperaciones()
 
     seccionEditarOperacion.classList.remove("is-hidden")
     seccionBalance.classList.add("is-hidden")
 
-    seccionEditarOperacion.innerHTML = `<div class="box column is-8-desktop is-offset-2-desktop is-12-tablet" id="contenedor-formulario-editar-operacion">
+    seccionEditarOperacion.innerHTML = `
+    <div class="box column is-8-desktop is-offset-2-desktop is-12-tablet" id="contenedor-formulario-editar-operacion">
     <h2 class="title is-2 has-text-weight-bold mb-6">Editar operación</h2>
     <div class="field">
         <form action="" method="POST" id="formulario-editar-operacion">
@@ -493,6 +489,7 @@ const crearFormularioEditar = (id) => {
 
 const crearBotonesEliminar = () => {
     const botonesEliminarOperacion = document.querySelectorAll(".boton-eliminar-operacion")
+
     for (let i = 0; i < botonesEliminarOperacion.length; i++) {
         botonesEliminarOperacion[i].onclick = () => {
            let operaciones = obtenerOperaciones()
@@ -512,6 +509,7 @@ const crearBotonesEliminar = () => {
 
 const crearBotonesEditar = () => {
     const botonesEditarOperacion = document.querySelectorAll(".boton-editar-operacion")
+    
     for (let i = 0; i < botonesEditarOperacion.length; i++) {
         botonesEditarOperacion[i].onclick = () => {
            const idBotonEditarOperacion = Number(botonesEditarOperacion[i].id.slice(25))
@@ -531,13 +529,9 @@ const ordernarOperacionesPorFecha = () => {
 }
 
 mostrarOperacionesEnHTML(obtenerOperaciones())
-
 obtenerGanancias();
-
 obtenerGastos();
-
 obtenerTotal();
-
 ordernarOperacionesPorFecha()
 
 formularioAgregarNuevaOperacion.onsubmit = (event) => {
@@ -813,8 +807,7 @@ const mostrarReportes = () => {
         contenedorTotalesMes.innerHTML = agregarTotalesPorMes();   
 }
 
-
-// Totales por categoria 
+// Totales por categoría 
 
 const separarPorCategoria = () => { // Devuelve un array de operaciones separadas por categoría
 
@@ -920,16 +913,15 @@ const separarOperacionesPorMes = () => {
         operacionesPorMes.push([])
     })
 
-
     operaciones.map((elemento) => {
         const fecha = new Date(elemento.fecha + " 11:00:00 ")
         const mes = fecha.getMonth()
 
         operacionesPorMes[mes].push(elemento)
       })
+
       return operacionesPorMes
 }
-
 
 const obtenerGananciasPorMes = (indiceMes) => {
     const operacionesPorMes = separarOperacionesPorMes();
@@ -967,7 +959,6 @@ const obtenerGastosPorMes = (indiceMes) => {
     return sumaGastosPorMes;
 };
 
-
 const obtenerBalancePorMes = (indiceMes) => {
     const operacionesPorMes = separarOperacionesPorMes();
     const operacionesMesElegido = operacionesPorMes[indiceMes];
@@ -981,7 +972,6 @@ const obtenerBalancePorMes = (indiceMes) => {
 
     return totalesPorMes;
 }
-
 
 const agregarTotalesPorMes = () => {
     const meses = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
