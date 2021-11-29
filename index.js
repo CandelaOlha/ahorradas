@@ -680,13 +680,18 @@ const obtenerCategoriaConMayorGanancia = (array) => {
     return operacionConMayorGanancia.categoria;
    }
 
-const sumaCategoriaConMayorGanancia = (array) => { // Revisar
-    return array.reduce((acc, elemento) => {
-        if (elemento.tipo === "ganancia") {
-            acc = acc + Number(elemento.monto);
-        }
-        return acc;
-    }, 0)
+const sumaCategoriaConMayorGanancia = (array) => {
+    const categoriaConMayorGanancia = obtenerCategoriaConMayorGanancia(array);
+
+    const operacionesCategoriaMayorGanancia = array.filter((elemento) => {
+        return elemento.categoria === categoriaConMayorGanancia && elemento.tipo === "ganancia";
+    })
+
+    const sumaGanancias = operacionesCategoriaMayorGanancia.reduce((acc, elemento) => {
+        return acc + Number(elemento.monto);
+    }, 0) 
+
+    return sumaGanancias;
 }
 
 const obtenerCategoriaConMayorGasto = (array) => {
@@ -701,17 +706,21 @@ const obtenerCategoriaConMayorGasto = (array) => {
         return acc;
     })
 
-    console.log(operacionConMayorGasto)
     return operacionConMayorGasto.categoria;
    }
 
 const sumaCategoriaConMayorGasto = (array) => {
-    return array.reduce((acc, elemento) => {
-        if (elemento.tipo === "gasto") {
-            acc = acc + Number(elemento.monto);
-        }
-        return acc;
-    }, 0)
+    const categoriaConMayorGasto = obtenerCategoriaConMayorGasto(array);
+
+    const operacionesCategoriaMayorGasto = array.filter((elemento) => {
+        return elemento.categoria === categoriaConMayorGasto && elemento.tipo === "gasto";
+    })
+
+    const sumaGastos = operacionesCategoriaMayorGasto.reduce((acc, elemento) => {
+        return acc + Number(elemento.monto);
+    }, 0) 
+
+    return sumaGastos;
 }
 
 const mostrarReportes = () => {
