@@ -774,25 +774,20 @@ const mostrarReportes = () => {
                 <h4 class="has-text-weight-semibold">Balance</h4>
             </div>
         </div>
-        <div class="columns is-mobile is-align-items-center">
-            <h4 class="column has-text-weight-semibold">00/0000</h4>
-            <div class="column has-text-right">
-                <h4 class="has-text-success">+$0</h4>
-            </div>
-            <div class="column has-text-right">
-                <h4 class="has-text-danger">-$0</h4>
-            </div>
-            <div class="column has-text-right">
-                <h4>$0</h4>
-            </div>
+        <div class="columns is-flex is-flex-direction-column is-mobile" id="contenedor-totales-mes">
         </div>
         </section>
         `
 
         const contenedorTotalesCategorias = document.querySelector("#contenedor-totales-categorias");
+        const contenedorTotalesMes = document.querySelector("#contenedor-totales-mes");
 
         contenedorTotalesCategorias.innerHTML = agregarTotalesPorCategorias();   
+        contenedorTotalesMes.innerHTML = agregarTotalesPorMes();   
 }
+
+
+// Totales por categoria 
 
 const separarPorCategoria = () => { // Devuelve un array de operaciones separadas por categoría
 
@@ -884,4 +879,102 @@ const agregarTotalesPorCategorias = () => {
     }, "")
 
     return totalesPorCategorias;
+}
+
+// Totales por mes
+
+const separarOperacionesPorMes = () => {
+    const meses = [0, 1, 2 , 3, 4, 5, 6, 7, 8, 9, 10, 11]
+    const operaciones = obtenerOperaciones()
+
+    const operacionesPorMes = []
+
+    meses.map((mes) => {
+        operacionesPorMes.push([])
+    })
+
+
+    operaciones.map((elemento) => {
+        const fecha = new Date(elemento.fecha + " 11:00:00 ")
+        const mes = fecha.getMonth()
+
+        operacionesPorMes[mes].push(elemento)
+      })
+      return operacionesPorMes
+}
+
+
+const obtenerGananciasPorMes = (indiceMes) => {
+    const operacionesPorMes = separarOperacionesPorMes();
+    const operacionesMesElegido = operacionesPorMes[indiceMes];
+  
+    let sumaGananciasPorMes = 0;
+  
+    const gananciasPorMes = operacionesMesElegido.filter((elemento) => {
+        return elemento.tipo === "ganancia";
+      }
+    );
+  
+    sumaGananciasPorMes = gananciasPorMes.reduce((acc, elemento) => {
+      return acc + Number(elemento.monto);
+    }, 0);
+  
+    return sumaGananciasPorMes;
+}
+
+const obtenerGastosPorMes = (indiceMes) => {
+    const operacionesPorMes = separarOperacionesPorMes();
+    const operacionesMesElegido = operacionesPorMes[indiceMes];
+  
+    let sumaGastosPorMes = 0;
+  
+    const gastosPorMes = operacionesMesElegido.filter((elemento) => {
+        return elemento.tipo === "gasto";
+      }
+    );
+  
+    sumaGastosPorMes = gastosPorMes.reduce((acc, elemento) => {
+      return acc + Number(elemento.monto);
+    }, 0);
+  
+    return sumaGastosPorMes;
+};
+
+
+const obtenerBalancePorMes = (indiceMes) => {
+    const operacionesPorMes = separarOperacionesPorMes();
+    const operacionesMesElegido = operacionesPorMes[indiceMes];
+
+    const totalesPorMes = operacionesMesElegido.reduce((acc, elemento) => {
+        const gananciasPorMes = obtenerGananciasPorMes(indiceMes);
+        const gastosPorMes = obtenerGastosPorMes(indiceMes);
+
+        return gananciasPorMes - gastosPorMes;
+    }, 0)
+
+    return totalesPorMes;
+}
+
+
+const agregarTotalesPorMes = () => {
+    const meses = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+
+    const totalesPorMes = meses.reduce((acc, elemento, index) => {
+        return acc + `
+        <div class="column columns my-0 py-0">
+            <h4 class="column has-text-weight-semibold">${elemento}/2021</h4>
+            <div class="column has-text-right">
+             <h4 class="has-text-success">+$${obtenerGananciasPorMes(index)}</h4>
+            </div>
+            <div class="column has-text-right">
+                <h4 class="has-text-danger">-$${obtenerGastosPorMes(index)}</h4>
+            </div>
+            <div class="column has-text-right">
+                <h4>$${obtenerBalancePorMes(index)}</h4>
+            </div>
+        </div>
+        `
+    }, "")
+
+    return totalesPorMes;
 }
