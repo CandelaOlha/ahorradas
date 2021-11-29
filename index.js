@@ -665,16 +665,22 @@ selectFiltroOrden.onchange = () => {
 
 // Sección Reportes
 
-const obtenerCategoriaConMayorGanancia = (array) => { // No funciona
-    return array.reduce((acc,elemento) => {
-        if (elemento.tipo === "ganancia" && elemento.monto > acc.monto) {
-            acc = elemento
+const obtenerCategoriaConMayorGanancia = (array) => {
+    const ganancias = array.filter((elemento) => {
+        return elemento.tipo === "ganancia";
+    })
+
+    const operacionConMayorGanancia = ganancias.reduce((acc, elemento) => {
+        if (Number(elemento.monto) > Number(acc.monto)) {
+            acc = elemento;
         }
-        return elemento.categoria
-      })
+        return acc;
+    })
+
+    return operacionConMayorGanancia.categoria;
    }
 
-const sumaCategoriaConMayorGanancia = (array) => {
+const sumaCategoriaConMayorGanancia = (array) => { // Revisar
     return array.reduce((acc, elemento) => {
         if (elemento.tipo === "ganancia") {
             acc = acc + Number(elemento.monto);
@@ -683,13 +689,20 @@ const sumaCategoriaConMayorGanancia = (array) => {
     }, 0)
 }
 
-const obtenerCategoriaConMayorGasto = (array) => { // No funciona
-    return array.reduce((acc,elemento) => {
-      if (elemento.tipo === "gasto" && elemento.monto > acc.monto) {
-          acc = elemento
-      }
-      return elemento.categoria
+const obtenerCategoriaConMayorGasto = (array) => {
+    const gastos = array.filter((elemento) => {
+        return elemento.tipo === "gasto";
     })
+
+    const operacionConMayorGasto = gastos.reduce((acc, elemento) => {
+        if (Number(elemento.monto) > Number(acc.monto)) {
+            acc = elemento;
+        }
+        return acc;
+    })
+
+    console.log(operacionConMayorGasto)
+    return operacionConMayorGasto.categoria;
    }
 
 const sumaCategoriaConMayorGasto = (array) => {
