@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
         integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
     <link rel="icon" type="image/ico" href="favicon.ico">
-    <title>AhorrADAs</title>
+    <title>AhorrADAs</title> 
 </head>
 <body>
     <!-- Acá empieza empieza la barra de navegación -->
@@ -83,6 +83,7 @@
                     <div class="field" id="contenedor-filtros">
                         <form action="" method="POST">
                             <div class="field">
+                                <!-- El for de un label debe ir asociado al **id** de un elemento, no su name -->
                                 <label class="label" for="tipo">Tipo</label>
                                 <div class="select is-fullwidth">
                                     <select name="tipo" id="select-filtro-tipo">
@@ -93,6 +94,7 @@
                                 </div>
                             </div>
                             <div class="field">
+                                <!-- El for de un label debe ir asociado al **id** de un elemento, no su name -->
                                 <label class="label" for="categoria">Categoría</label>
                                 <div class="select is-fullwidth">
                                     <select name="categoria" id="select-categorias-filtro">
@@ -100,12 +102,14 @@
                                 </div>
                             </div>
                             <div class="field">
+                                <!-- El for de un label debe ir asociado al **id** de un elemento, no su name -->
                                 <label class="label" for="fecha">Desde</label>
                                 <div class="control">
                                     <input class="input" type="date" name="fecha" id="input-filtro-fecha">
                                 </div>
                             </div>
                             <div class="field">
+                                <!-- El for de un label debe ir asociado al **id** de un elemento, no su name -->
                                 <label class="label" for="orden">Ordenar por</label>
                                 <div class="select is-fullwidth">
                                     <select name="orden" id="select-filtro-orden">
@@ -122,6 +126,9 @@
                     </div>
                 </div>
             </div>
+            <!-- Este div, y el div que le sigue con la clase "box", no se cierran nunca. 
+            Deberian cerrarse antes de cerrar section en la linea 156
+            El tabulado las guia para evitar errores como este - prestenle atencion -->
             <div class="column is-7-desktop is-12-tablet">
                 <div class="box">
                     <div class="columns is-align-items-center">
@@ -157,6 +164,7 @@
             <div class="box column is-8-desktop is-offset-2-desktop is-12-tablet">
                 <h2 class="title is-2 has-text-weight-bold mb-6">Categorías</h2>
                 <div class="mb-6">
+                    <!-- El for de un label debe ir asociado al **id** de un elemento, no su name -->
                     <label for="nombre" class="label">Nombre</label>
                     <div class="field is-grouped">
                         <div class="control is-expanded">
@@ -195,18 +203,21 @@
                 <div class="field">
                     <form action="" method="POST" id="formulario-agregar-nueva-operacion">
                         <div class="field">
+                            <!-- El for de un label debe ir asociado al **id** de un elemento, no su name -->
                             <label class="label" for="descripcion">Descripción</label>
                             <div class="control">
                                 <input class="input" type="text" name="descripcion" id="input-descripcion">
                             </div>
                         </div>
                         <div class="field">
+                            <!-- El for de un label debe ir asociado al **id** de un elemento, no su name -->
                             <label class="label" for="monto">Monto</label>
                             <div class="control">
                                 <input class="input" type="number" name="monto" id="input-monto">
                             </div>
                         </div>
                         <div class="field">
+                            <!-- El for de un label debe ir asociado al **id** de un elemento, no su name -->
                             <label class="label" for="tipo">Tipo</label>
                             <div class="select is-fullwidth">
                                 <select name="tipo" id="select-tipo">
@@ -216,6 +227,7 @@
                             </div>
                         </div>
                         <div class="field">
+                            <!-- El for de un label debe ir asociado al **id** de un elemento, no su name -->
                             <label class="label" for="categoria">Categoría</label>
                             <div class="select is-fullwidth">
                                 <select name="categoria" id="select-categorias-nueva-operacion">
@@ -223,6 +235,7 @@
                             </div>
                         </div>
                         <div class="field">
+                            <!-- El for de un label debe ir asociado al **id** de un elemento, no su name -->
                             <label class="label" for="fecha">Fecha</label>
                             <div class="control">
                                 <input class="input" type="date" name="fecha" id="input-fecha">
@@ -245,5 +258,6 @@
         <!-- Acá termina el box de Editar categoría -->
     </main>
 </body>
+<!-- La etiqueta script debe ir **dentro** de la etiqueta body -->
 <script src="index.js"></script>
 </html>

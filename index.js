@@ -20,6 +20,7 @@ const inputMonto = document.querySelector("#input-monto");
 const selectTipo = document.querySelector("#select-tipo");
 const inputFecha = document.querySelector("#input-fecha");
 const botonCancelarNuevaOperacion = document.querySelector("#boton-cancelar-nueva-operacion");
+// Declaran esta variable, pero nunca la usan
 const botonAgregarNuevaOperacion = document.querySelector("#boton-agregar-nueva-operacion");
 const contenedorOperacionesVacio = document.querySelector("#contenedor-operaciones-vacio");
 const contenedorCategoriasOperaciones = document.querySelector("#contenedor-categorias-operaciones");
@@ -38,6 +39,18 @@ const contenedorReportes = document.querySelector("#contenedor-reportes");
 const contenedorReportesVacios = document.querySelector("#contenedor-reportes-vacios");
 
 // Funciones auxiliares de JSON
+
+// No lo considero un error a esta altura, pero sí es bueno que vayan dandose cuenta cuándo las variables
+// son innecesarias. Dejo este comentario solo para que vayan pensando en este tema. 
+// Al principio, mientras mas variables declaramos, mejor, ya que nos permite entender mejor nuestro codigo
+// A medida que vayan ganando experiencia y confianza, es bueno ir dejando cierta abstracción en nuestro 
+// codigo para reducir su tamaño. Asi, evitamos algunas variables porque suponemos que el lector (y nosotras mismas)
+// sabemos lo que esta pasando. Tambien podemos aprovechar el retorno implicito como vimos en clases pasadas. 
+// Esta funcion, por ejemplo, puede convertirse asi:
+
+// const convertirAJSON = (objeto) => JSON.stringify(objeto);
+
+// Queda mucho mas breve y (para un dev con algo de experiencia, como serán ustedes en unos meses) mucho mas claro :)
 
 const convertirAJSON = (objeto) => {
     const objetoConvertidoAJSON = JSON.stringify(objeto);
@@ -79,6 +92,9 @@ for (let i = 0; i < linksMenu.length; i++) {
 
 // Mostrar y ocultar secciones (ver si podemos tener una función auxiliar para esto)
 
+// Estas tres funciones son muy parecidas entre sí. Piensen de alguna manera de abstraerlas, es decir, 
+// una funcion que por ejemplo reciba la seccion que queremos mostrar, y la funcion misma sepa 
+// que elementos mostrar y cuales ocultar
 botonBalance.onclick = () => {
     seccionBalance.classList.remove("is-hidden");
     seccionCategorias.classList.add("is-hidden");
@@ -127,6 +143,10 @@ botonOcultarFiltros.onclick = () => {
 
 // Sección Categorías
 
+// Como esta variable solo es necesaria para la funcion obtenerCategorias, estaria bueno que 
+// sea declarada solamente dentro de la funcion. 
+// Limitar el scope de una variable (hacer que sea solo accesible desde la funcion en donde esta declarada)
+// es una buena manera de evitar errores a futuro: nadie va a poder modificar esta variable por error. 
 const categorias = ["Comidas", "Servicios", "Salidas", "Educación", "Transporte", "Trabajo"];
 
 const obtenerCategorias = () => {
@@ -137,6 +157,7 @@ const obtenerCategorias = () => {
     }
     else {
         return categoriasEnLocalStorage;
+        // No dejen codigo comentado en una entrega
         // categorias = categoriasEnLocalStorage; (revisar si es necesario)
     }
 }
@@ -194,12 +215,23 @@ botonAgregarCategoria.onclick = () => {
     inputNuevaCategoria.value = "";
 
     guardarEnLocalStorage(categorias, "categorias");
+    // aqui deberiamos llamar a la funcion agregarNuevasCategoriasAlSelectFiltro, asi tenemos el "todas". 
+    // Esto causa un error en su pagina: cuando agrego una nueva categoria, ya no puedo filtrar por "todas"
+    // las categorias. 
     agregarNuevasCategoriasAlSelect(selectCategoriasFiltro);
     agregarNuevasCategoriasAlSelect(selectCategoriasNuevaOperacion);    
     mostrarCategoriasEnHTML();
 }
 
 const crearFormularioEditarCategoria = (id) => {
+    // Esta funcion es muy larga, y esta haciendo muchas cosas a la vez. 
+    // Seria bueno poder mejorar su claridad haciendo funciones auxiliares que se llamen desde aqui
+    // Por ejemplo: 
+    // agregarHTMLFormularioCategorias()
+    // manejarSubmitFormularioCategorias()
+    // manejarCancelarAgregarCategorias()
+
+
     const categorias = obtenerCategorias();
 
     seccionEditarCategoria.classList.remove("is-hidden")
@@ -256,6 +288,7 @@ const crearBotonesEditarCategoria = () => {
     for (let i = 0; i < botonesEditarCategoria.length; i++) {
         botonesEditarCategoria[i].onclick = () => {
            const idBotonEditarCategoria = Number(botonesEditarCategoria[i].id.slice(23));
+        //    No dejen console log en una entrega
            console.log(idBotonEditarCategoria);
            crearFormularioEditarCategoria(idBotonEditarCategoria);
         }
@@ -279,10 +312,15 @@ const crearBotonesEliminarCategoria = () => {
     }
 }
 
+// Es confuso tratar de entender el flujo de ejecucion del codigo si tenemos mezcladas las funciones auxiliares
+// con ejecuciones como esta, que ocurren apenas carga la pagina. 
+// Traten de dejar siempre estas ejecuciones al final de todo
+// Asi es mas facil entender qué ocurre primero y qué ocurre después
 mostrarCategoriasEnHTML();
 
 // Sección Operaciones
 
+// Misma observacion aqui que en la variable categorias
 const operaciones = [];
 
 const obtenerOperaciones = () => {
@@ -372,9 +410,11 @@ const mostrarOperacionesEnHTML = (array) => {
 
     contenedorOperaciones.innerHTML = operacionesEnHTML;
 
+    // perfecto uso de funciones auxiliares aca
     crearBotonesEliminar()
     crearBotonesEditar()
 
+    // Esto podria estar en una funcion auxiliar
     if (array.length > 0) {
         contenedorCategoriasOperaciones.classList.remove("is-hidden");
         contenedorOperaciones.classList.remove("is-hidden");
@@ -471,6 +511,8 @@ const crearFormularioEditar = (id) => {
         seccionEditarOperacion.classList.add("is-hidden")
         seccionBalance.classList.remove("is-hidden")
 
+        // perfecto uso de funciones auxiliares aqui - agreguenlo al resto de esta funcion, el codigo
+        // de arriba es muy largo!
         guardarEnLocalStorage(operaciones, "operaciones")
         mostrarOperacionesEnHTML(obtenerOperaciones())
         obtenerGanancias();
@@ -591,6 +633,7 @@ const aplicarfiltroOrden = (array) => {
     }
     else if (selectFiltroOrden.value === "a-z") {
         return array.sort((a, b) => {
+            // No lo vimos y este uso es perfecto :D !
             return a.descripcion.localeCompare(b.descripcion); // Este método no sé si lo vimos en clase. Lo encontré en la web de W3Schools. Compara y ordena strings.
         })
     }
@@ -643,6 +686,7 @@ selectFiltroTipo.onchange = () => {
  
 selectCategoriasFiltro.onchange = () => {
     const arrayFiltrado = aplicarFiltros()
+    // ojo con dejar console log olvidados
     console.log(arrayFiltrado)
     mostrarOperacionesEnHTML(arrayFiltrado)
 }
@@ -721,6 +765,8 @@ const sumaCategoriaConMayorGasto = (array) => {
 // Categoría con mayor balance
 // Mes con mayor ganancia
 // Mes con mayor gasto
+
+// Gracias por dejarlo anotado! si quieren seguir con eso me escriben :)
 
 const mostrarReportes = () => {
     const operaciones = obtenerOperaciones();
@@ -868,6 +914,9 @@ const obtenerBalancePorCategorias = (indiceCategoria) => {
     const operacionesPorCategoria = separarPorCategoria();
     const operacionesCategoriaElegida = operacionesPorCategoria[indiceCategoria];
 
+
+    // No es necesario usar un reduce aqui - podrian hacer simplemente gananciasPorCategoria - gastosPorCategoria;
+    // Una buena regla aqui es: Si no usan la acumuladora, no necesitan el reduce
     const totalesPorCategoria = operacionesCategoriaElegida.reduce((acc, elemento) => {
         const gananciasPorCategoria = obtenerGananciasPorCategorias(indiceCategoria);
         const gastosPorCategoria = obtenerGastosPorCategorias(indiceCategoria);
@@ -963,6 +1012,7 @@ const obtenerBalancePorMes = (indiceMes) => {
     const operacionesPorMes = separarOperacionesPorMes();
     const operacionesMesElegido = operacionesPorMes[indiceMes];
 
+    // No necesitan el reduce aqui
     const totalesPorMes = operacionesMesElegido.reduce((acc, elemento) => {
         const gananciasPorMes = obtenerGananciasPorMes(indiceMes);
         const gastosPorMes = obtenerGastosPorMes(indiceMes);
